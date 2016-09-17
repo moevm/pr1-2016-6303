@@ -2,6 +2,6 @@
 
 int main()
 {
-	printf("Hi!\n");
+	printf("Hidden!\n");
 	return 0;
 }
