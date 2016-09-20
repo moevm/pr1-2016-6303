@@ -9,7 +9,7 @@ char* get_name() { // * - указатель на массив
   //char * input = malloc(100); //работает так
   static char input[100]; /*и так тоже (static
     оставляет место в пямяти)*/
-  while((c = getchar()) != EOF) {
+  while((c = getchar()) != '\n') {
           input[i] = c;
           i++;
   }
