@@ -3,7 +3,7 @@
 /*__*/
 #include "get_name.h"
 
-char * get_name() { // * - указатель на массив
+char* get_name() { // * - указатель на массив
   int c;
   int i = 0;
   //char * input = malloc(100); //работает так
