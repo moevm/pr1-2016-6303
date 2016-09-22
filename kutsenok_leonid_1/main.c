@@ -5,8 +5,6 @@
 #include "get_name.h"
 #include "print_str.h"
 
-void print_str(char*);
-
 int main() {
   char* input = get_name();
   char output[107] = "Hello, ";
