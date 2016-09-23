@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <string.h>
 #include "print_str.h"
-void print_name(const char* str)
+void print_str(char* str)
 {
-int puts(const char* str);
+ puts(str);
 }
