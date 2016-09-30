@@ -4,12 +4,12 @@
 #include <stdlib.h>
 #include "get_name.h"
 #include "print_str.h"
-int main()
-{
-char hello[90] = "Hello, ";
-char* name = get_name();
-strcat(hello,name);
-print_str(hello);
-return 0;
+int main(){
+    char hello[90] = "Hello, ";
+    char* result;
+    result = get_name();
+    print_str(strncat(hello, result, 80));
+    free(result);
+    return 0;
 }
 
