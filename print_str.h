@@ -1,1 +1,2 @@
-void print_str (char* print);
+void print_str(char* print);
+
