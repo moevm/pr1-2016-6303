@@ -10,21 +10,27 @@ return max;
 int get_min(int arr[], int n){ 
 int min,i; 
 min=arr[0]; 
-for(i = 0; i<n; i++) if (min>arr[i]) min = arr[i]; 
+for(i = 0; i<n; i++) 
+    if (min>arr[i]) 
+        min = arr[i]; 
 return min; 
 } 
 
 int get_sum(int arr[], int n){ 
 int sum,i; 
 sum=0; 
-for(i = 0; i<n; i++) if (((arr[i])%2) == 0) sum+=arr[i]; 
+for(i = 0; i<n; i++) 
+    if (((arr[i])%2) == 0) 
+        sum += arr[i]; 
 return sum; 
 } 
 
 int get_count_first_el(int arr[], int n){ 
 int count,i; 
 count = 0; 
-for(i = 1; i<n; i++) if (arr[0] == arr[i]) count++; 
+for(i = 1; i<n; i++) 
+    if (arr[0] == arr[i]) 
+        count++; 
 return count; 
 } 
 void menu(int ch, int arr[], int n){ 
