@@ -2,8 +2,6 @@ EXECUTABLE_NAME=lab1_kulikov
 
 all: program clean_obj
 
-program_clean: program clean_obj
-
 program: main.o get_name.o print_str.o
 	gcc main.o get_name.o print_str.o -o $(EXECUTABLE_NAME)
 
