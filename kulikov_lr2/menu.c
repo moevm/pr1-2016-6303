@@ -15,17 +15,17 @@ return min;
 } 
 
 int get_sum(int arr[], int n){ 
-int summ,i; 
-summ=0; 
-for(i = 0; i<n; i++) if (((arr[i])%2) == 0) summ+=arr[i]; 
-return summ; 
+int sum,i; 
+sum=0; 
+for(i = 0; i<n; i++) if (((arr[i])%2) == 0) sum+=arr[i]; 
+return sum; 
 } 
 
 int get_count_first_el(int arr[], int n){ 
-int k,i; 
-k = 0; 
-for(i = 1; i<n; i++) if (arr[0] == arr[i]) k++; 
-return k; 
+int count,i; 
+count = 0; 
+for(i = 1; i<n; i++) if (arr[0] == arr[i]) count++; 
+return count; 
 } 
 void menu(int ch, int arr[], int n){ 
 
