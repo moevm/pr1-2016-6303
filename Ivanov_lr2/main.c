@@ -5,7 +5,7 @@ void menu (int ch, int arr[], int n){
     case 1: get_min(&arr[0], n); break;
     case 2: get_sum(&arr[0], n); break;
     case 3: get_count_first_el(&arr[0], n); break;
-    default: printf("Dannie neverni\n");
+    default: printf("Данные неверны\n");
    }
 }
 
