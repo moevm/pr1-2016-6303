@@ -37,19 +37,19 @@ int get_count_first_el(int arr[], int n){
 void menu(int ch, int arr[], int n){ 
 switch(ch){ 
 case 0: 
-    printf("%d", get_max(arr, n)); 
+    printf("%d\n", get_max(arr, n)); 
     break; 
 
 case 1: 
-    printf("%d", get_min(arr, n)); 
+    printf("%d\n", get_min(arr, n)); 
     break; 
 
 case 2: 
-    printf("%d", get_sum(arr, n)); 
+    printf("%d\n", get_sum(arr, n)); 
     break; 
 
 case 3: 
-    printf("%d", get_count_first_el(arr, n)); 
+    printf("%d\n", get_count_first_el(arr, n)); 
     break; 
 
 default: 
