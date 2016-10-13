@@ -1,4 +1,4 @@
-nt ch, int arr[], int n){        
+void menu (int ch, int arr[], int n){        
     switch(ch)
     {
         case 0: printf("%d\n",get_max(arr,n));
