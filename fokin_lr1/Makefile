@@ -1,5 +1,5 @@
 main: main.o print_str.o get_name.o
-	gcc main.o print_str.o get_name.o
+	gcc -o main.o print_str.o get_name.o
 main.o: main.c get_name.h print_str.h
 	gcc -c main.c
 print_str.o: print_str.c
