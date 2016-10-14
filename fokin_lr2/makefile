@@ -1,5 +1,5 @@
 main: main.o menu.o get_max.o get_min.o get_sum.o get_count_first_el.o
-	gcc main.o menu.o get_max.o get_min.o get_sum.o get_count_first_el.o -c main
+	gcc main.o menu.o get_max.o get_min.o get_sum.o get_count_first_el.o -o main
 main.o: main.c menu.h get_max.h get_min.h get_sum.h get_count_first_el.h
 	gcc -c main.c
 menu.o: menu.c
