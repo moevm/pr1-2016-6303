@@ -1,0 +1,14 @@
+main: main.o menu.o get_max.o get_min.o get_sum.o get_count_first_el.o
+	gcc main.o menu.o get_max.o get_min.o get_sum.o get_count_first_el.o -o main
+main.o: main.c menu.h get_max.h get_min.h get_sum.h get_count_first_el.h
+	gcc -c main.c
+menu.o: menu.c
+	gcc -c menu.c
+get_max.o: get_max.c
+	gcc -c get_max.c 
+get_min.o: get_min.c
+	gcc -c get_min.c
+get_sum.o: get_sum.c
+	gcc -c get_sum.c
+get_count_first_el.o: get_count_first_el.c
+	gcc -c get_count_first_el.c
