@@ -7,9 +7,9 @@ char *str;
 char check[] = "Dragon flew away!"; 
 int n = 0, m = 0, size = 10, len = 0, ch; 
 str = realloc(NULL, sizeof(char)*size); 
-	while(strstr(str,check)==NULL) { 
+	while(strstr(str,check) == NULL) { 
 		do { 
-			ch=getchar(); 
+			ch = getchar(); 
 		} 
 	while (ch == 9 || ch == 32 || ch == 10);
 		str[len++] = ch; 
