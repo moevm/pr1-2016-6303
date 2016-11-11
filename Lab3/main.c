@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdlib.h>
 
 int check(char *sent);
 
@@ -17,22 +18,22 @@ int main()
 	return 0;
 }
 
-int check(char *sent)
+int check(char *sent_check)
 {
 	int j;
 	char str[] = "Dragon flew away!";
 
 	for (j = 0; j < 16; ++j)
-		if (*(sent + j) != str[j])
+		if (*(sent_check + j) != str[j])
 			return 0;
 	return 1;
 }
 
 void sentence(int *control, int *before, int *quest)
 {
-	char sent[100];
 	char c;
-	int i = 0;
+	int i = 0, am = 0, size = 20;
+	char *sent = (char*)malloc(size*sizeof(char));
 
 	while (((c = getchar()) != '.') && (c != ';') && (c != '?'))
 		if (((c != '\t') && (c != '\n') && (c != ' ')) || (i != 0))
@@ -45,6 +46,8 @@ void sentence(int *control, int *before, int *quest)
 					break;
 				}
 			++i;
+			if (++am == (size))
+				sent = realloc(sent, sizeof(char)*(++size));
 		}
 	if (*control == 0)
 	{
