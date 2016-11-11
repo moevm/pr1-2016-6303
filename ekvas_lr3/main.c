@@ -18,11 +18,14 @@ while((ch=getchar())!=EOF && ch != '.' && ch != ';' && ch != '?'){
     }
     str[len++]='\0';
     len=0;
-    switch((int)ch){
-    	case 63:n++;nn++;break;
-    	case 59:printf("%s;\n", str);n++;break;
-    	case 46:printf("%s.\n", str);n++;break;
-    }
+	output(&ch, &n, &nn, str);
 }
 printf("Количество предложений до %d и количество предложений после %d", n, n-nn);
+}
+int output(int* ch, int* n, int* nn, int str){
+	    switch((int)*ch){
+    	case 63:*n+=1;*nn+=1;break;
+    	case 59:printf("%s;\n", str);*n+=1;break;
+    	case 46:printf("%s.\n", str);*n+=1;break;
+    }
 }
