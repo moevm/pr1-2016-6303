@@ -1,0 +1,43 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+void read(int *result, int *aft, int *que);
+
+int main()
+{
+	int result = 0; //вспомогательная переменная
+	int aft = 0; //колитчество предложений после работы программы
+	int que = 0; //количество вопросительных предложений
+	while (result == 0)
+		read(&result, &aft, &que);
+	printf("Количество предложений до %d и количество предложений после %d", (aft + que), aft);
+	return 0;
+}
+
+void read(int *result, int *aft, int *que)
+{
+	char ch;
+	int i = 0;
+	char* massiv = (char*)malloc(100 * sizeof(char)); //выделяем память
+	while (((ch = getchar()) != '.') && (ch != '?') && (ch != ';')) 
+	{
+		if (ch == '!')
+		{
+			*result = 1;
+			break;
+		}
+		if (((ch != '\t') && (ch != '\n') && (ch != ' ')) || (i != 0))
+			massiv[i++] = ch; //запишем символ в массив, если он не табуляция, не символ переноса строки, не пробел
+	}
+	
+	if (*result == 0)
+		if ((ch == '.') || (ch == ';')) //добавим знаки препинания в конец предложения
+		{
+			massiv[i++] = ch;
+			massiv[i] = '\0'; //добавим символ конца строки
+			printf("%s\n", massiv);
+			++*aft; //подсчет невопросительных предложений
+		}
+		else
+			++*que; //подсчет вопросительных предложений
+}
