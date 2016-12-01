@@ -5,12 +5,15 @@
 
 int main() 
 {
-    int i=0,k=0,kold=0,kolp=0, *text;
-    char subl[3] = {".;?"},a; 
-    text = (int*)malloc(sizeof(char));
+    int i=0,k=0,kold=0,kolp=0, count=5,c=1;
+    char subl[3] = {".;?"},a;
+    char* text;
+    text = (char*)malloc(count*sizeof(char));
     while((a = getchar()) != EOF){
         text[i] = a;
         i++;
+        text = (char*)realloc(text, (count+c)*sizeof(char));
+        c++;
     } 
     int n =i;
     i = 0;
@@ -34,6 +37,6 @@ int main()
         }}
        
     }
-      printf("Количество предложений до %d и количество предложений после %d",kolp+kold,kolp);    
+      printf("РљРѕР»РёС‡РµСЃС‚РІРѕ РїСЂРµРґР»РѕР¶РµРЅРёР№ РґРѕ %d Рё РєРѕР»РёС‡РµСЃС‚РІРѕ РїСЂРµРґР»РѕР¶РµРЅРёР№ РїРѕСЃР»Рµ %d",kolp+kold,kolp);    
     return 0;   
 }
