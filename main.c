@@ -6,7 +6,7 @@ int collect(char**getall);
 void copy(char**gatall,char**getall,int a);
 int main()
 {
-	int m,b,j=0,a,z=0;
+	int m,b,j,a,z=0;
 	char**getall=(char**)malloc(sizeof(char*)*1000);
 	for(a=0;a<1000;a++)
     {
@@ -40,7 +40,7 @@ int main()
 
 int collect(char** getall)
 {
-    int i,c,j;
+    int i,c,j=0;
       x:
 	for(i=0;(c=getchar())!=EOF;i++)
 	{
