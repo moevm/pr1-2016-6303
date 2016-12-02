@@ -68,7 +68,7 @@ int main(int ch, int arr[], int n)
 		break;
 
 	default:
-		printf("Данные некорректны");
+		printf("Р”Р°РЅРЅС‹Рµ РЅРµРєРѕСЂСЂРµРєС‚РЅС‹");
 	}
 }
 
