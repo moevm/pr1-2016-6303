@@ -41,7 +41,6 @@ int main()
 int collect(char** getall)
 {
     int i,c,j=0;
-      x:
 	for(i=0;(c=getchar())!=EOF;i++)
 	{
 		if(c==';'||c=='.'||c=='?')
@@ -49,7 +48,7 @@ int collect(char** getall)
 			getall[j][i++]=c;
 			getall[j][i]='\0';
 			j++;
-			goto x;
+			i=0;
 		}
         else if(c=='\n'||c=='\t')
            i= i-1;
@@ -64,7 +63,6 @@ void copy(char**gatall,char**getall,int j)
 {
  int y,d,h;
     y=0;
-    l:
         for(d=0;y<=j;d++)
         {        
            if(getall[y][d]==' ')
@@ -78,7 +76,7 @@ void copy(char**gatall,char**getall,int j)
                }
                gatall[y][h]='\0';
                y++;
-               goto l;
+               d=0;
            }
         }
 }
