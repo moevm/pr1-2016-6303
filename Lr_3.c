@@ -1,38 +1,44 @@
 #include <stdio.h> 
-#include <string.h> 
 #include <stdlib.h> 
+#include <string.h> 
+#include <malloc.h> 
+
 int main() 
-    { 
-        char *str; 
-        int n=0, nn=0, size = 10, len=0,ch; 
-        str = realloc(NULL, sizeof(char)*size); 
-        while(strstr(str,"Dragon flew away!")==NULL)
-            { 
-                do
-                { 
-                    ch=getchar(); 
-                }while(ch==9 || ch==32 || ch==10); 
-                    str[len++]=ch; 
-                    while((ch=getchar())!=EOF && ch != '.' && ch != ';' && ch != '?')
-                    { 
-                    str[len++]=ch; 
-                    if(len==size)
-                        { 
-                            str = realloc(str, sizeof(char)*(size+=16)); 
-                        } 
-                     } 
-                     str[len++]='\0'; 
-                        len=0; 
-                output(&ch, &n, &nn, str); 
-            } 
-                        printf("Количество предложений до %d и количество предложений после %d", n, n-nn); 
+{ 
+        int i=0,k=0,kold=0,kolp=0, count=5,c=1; 
+            char subl[3] = {".;?"},a; 
+            char* text; 
+        text = (char*)malloc(count*sizeof(char)); 
+        while((a = getchar()) != EOF){ 
+        text[i] = a; 
+        i++; 
+        text = (char*)realloc(text, (count+c)*sizeof(char)); 
+            c++; 
 } 
-            int output(int* ch, int* n, int* nn, int str)
-                                                                    { 
-                                                                    switch((int)*ch)
-                                                                    { 
-                                                                        case 63:*n+=1;*nn+=1;break; 
-                                                                        case 59:printf("%s;\n", str);*n+=1;break; 
-                                                                        case 46:printf("%s.\n", str);*n+=1;break; 
-                                                                    } 
-                                                                    }
+        int n =i; 
+        i = 0; 
+        for (k=0;k<n;k++){ 
+        if (((text[k] == ' ') && (strchr(subl,text[k-1]) != 0)) || (text[k] == '\n') || (text[k] == '\t')){ 
+        i++;
+        } 
+    else{ 
+    if (strchr(subl,text[k]) != 0){ 
+
+    if (text[k] != '?'){ 
+        for (int y=i;y<=k;y++){ 
+        printf("%c",text[y]); 
+        } 
+        printf("\n"); 
+        kolp++; 
+        } 
+        else{ 
+        kold++; 
+        } 
+        i=k+1; 
+        }} 
+
+        } 
+        printf("Количество предложений до %d и количество предложений после %d",kolp+kold,kolp); 
+        free(text); 
+        return 0; 
+}
