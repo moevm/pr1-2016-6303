@@ -1,5 +1,5 @@
-#include <stdlib.h>
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 
 struct MusicalComposition
@@ -7,8 +7,8 @@ struct MusicalComposition
     char *name;
     char *author;
     int year;
-    struct MusicalComposition *prev, *next;
-} ;
+    struct MusicalComposition *next, *prev;
+};
 
 typedef struct MusicalComposition MusicalComposition;
 
@@ -45,94 +45,105 @@ MusicalComposition *createMusicalCompositionList(char **array_names, char **arra
 
 void push(MusicalComposition *head, MusicalComposition *element)
 {
-    MusicalComposition *curr = head;
-    while (curr->next)
-        curr = curr->next;
-    curr->next = element;
-    element->prev = curr;
-}
-
-void removeEl(MusicalComposition *head, char *name_for_remove)
-{
-    MusicalComposition *curr = head;
-    while (curr->next)
+    if ((head->prev) && (head->next))
+        head = element;
+    else
     {
-        if (strcmp(curr->name, name_for_remove) == 0)
-            if ((curr->prev) == 0)
-            {
-                MusicalComposition *curr_2 = curr->next;
-                curr->name = curr_2->name;
-                curr->author = curr_2->author;
-                curr->year = curr_2->year;
-                curr_2->next->prev = curr;
-                curr->next = curr_2->next;
-                free(curr_2);
-            }
-            else
-            {
-                curr->prev->next = curr->next;
-                curr->next->prev = curr->prev;
-                free(curr);
-            }
-        curr = curr->next;
-    }
-    if ((strcmp(curr->name, name_for_remove) == 0) && (curr->next == 0))
-    {
-        curr->prev->next = NULL;
-        free(curr);
+        while (head->next)
+            head = head->next;
+        head->next = element;
+        element->prev = head;
     }
 }
 
 int count(MusicalComposition *head)
 {
-    int count = 0;;
-    MusicalComposition *curr = head;
+    int count = 0;
 
-    while (curr->next)
+    if (((head->prev) == 0) && ((head->next) == 0))
+        return 0;
+    else
+        while (head)
+        {
+            ++count;
+            head = head->next;
+        }
+
+    return count;
+}
+
+void removeEl(MusicalComposition *head, char *name_for_remove)
+{
+    int amount = count(head);
+    MusicalComposition *temp = head;
+    MusicalComposition *curr;
+
+    while (temp->next)
     {
-        ++count;
-        curr = curr->next;
+        if (strcmp(temp->name, name_for_remove) == 0)
+        {
+            if ((temp->prev) == 0)
+            {
+                temp = head->next;
+                memcpy(head, temp, (sizeof(MusicalComposition) - 4));
+                free(temp);
+                temp = head;
+            }
+            else
+            {
+                curr = temp->next; curr->prev->prev->next = curr;
+                curr = temp->prev; curr->next->next->prev = curr;
+                free(temp);
+                temp = curr->next;
+            }
+            --amount;
+        }
+        else
+            temp = temp->next;
     }
-
-    return ++count;
+    if (strcmp(temp->name, name_for_remove) == 0)
+    {
+        if (amount != 1)
+        {
+            temp->prev->next = NULL;
+            free(temp);
+        }
+    }
 }
 
 void print_names(MusicalComposition *head)
 {
-    MusicalComposition *curr = head;
-
-    while (curr->next)
-    {
-        printf("%s\n", curr->name);
-        curr = curr->next;
-    }
-    printf("%s\n", curr->name);
+    if (((head->prev) != 0) || ((head->next != 0)))
+        while (head->next)
+        {
+            printf("%s\n", head->name);
+            head = head->next;
+        }
 }
 
 // Функция сортировки для курсовой
 
 void sort(MusicalComposition *head)
 {
-    MusicalComposition *curr_i = head;
-    MusicalComposition *curr_j;
+    int amount = count(head);
+    MusicalComposition *curr;
+    MusicalComposition *temp = (MusicalComposition*)malloc(sizeof(MusicalComposition));
 
-    while (curr_i->next)
+    for (int i = 0; i < (amount - 1); ++i)
     {
-        curr_j = head;
-        while (curr_j->next)
+        curr = head;
+        while (((curr->prev) || (curr->next)) && (curr->next))
         {
-            if ((strcmp(curr_j->name, curr_j->next->name)) > 0)
+            if ((strcmp(curr->name, curr->next->name)) > 0)
             {
-                MusicalComposition *temp = (MusicalComposition*)malloc(sizeof(MusicalComposition));
-                temp->name = curr_j->next->name; temp->author = curr_j->next->author; temp->year = curr_j->next->year;
-                curr_j->next->name = curr_j->name; curr_j->next->author = curr_j->author; curr_j->next->year = curr_j->year;
-                curr_j->name = temp->name; curr_j->author = temp->author; curr_j->year = temp->year;
-                free(temp);
+                memcpy(temp, curr->next, (sizeof(MusicalComposition) - 8));
+                memcpy(curr->next, curr, (sizeof(MusicalComposition) - 8));
+                memcpy(curr, temp, (sizeof(MusicalComposition) - 8));
             }
-            curr_j = curr_j->next;
+            curr = curr->next;
         }
-        curr_i = curr_i->next;
     }
+    free(temp);
 }
 
 int main()
@@ -192,7 +203,6 @@ int main()
     printf("%d\n", k);
 
     removeEl(head, name_for_remove);
-
     print_names(head);
 
     k = count(head);
