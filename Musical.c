@@ -4,8 +4,8 @@
 
 typedef struct MusicalComposition
 {
-char name[80];
-char author[80];
+char *name;
+char *author;
 int year;
 struct MusicalComposition* next;
 struct MusicalComposition* prev;
@@ -90,8 +90,8 @@ return 0;
 MusicalComposition* createMusicalComposition(char* name, char* author, int year)
 {
   MusicalComposition *head = (MusicalComposition*)malloc(sizeof(MusicalComposition));
-  strcpy(head->name, name);
-  strcpy(head->author, author);
+  head->name=name;
+  head->author=author;
   head->year=year;
   head->next=NULL;
   head->prev=NULL;
@@ -125,7 +125,7 @@ void push(MusicalComposition* head, MusicalComposition* element)
 void removeEl(MusicalComposition* head, char* name_for_remove)
 {
 	MusicalComposition* test=head;
-    while(strcmp(test->name, name_for_remove) != 0 && test->next!=NULL)
+    while(tast->name!=name_for_remove && test->next!=NULL)
     	test=test->next;
     if(test->next != NULL && test->prev != NULL) 
      {
@@ -138,7 +138,11 @@ void removeEl(MusicalComposition* head, char* name_for_remove)
  	 } 
   	else if(test->prev == NULL) 
  	 {
-     test->next->prev = NULL;
+         test->year=test->next->year;         // при удалении 
+         test->name=test->next->name;         // первого элемента
+	 test->author=test->next->author;     // делаем второй первым
+	 test->next=test->next->next;        // и удаляем
+	 test->next->prev=test;              // второй элемент
 	 }
 }	 
 
