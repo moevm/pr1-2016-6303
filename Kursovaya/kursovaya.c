@@ -197,11 +197,7 @@ int main()
     //Функция createMusicalCompositionList всегда вызывается первой и всего один раз
     MusicalComposition *head = createMusicalCompositionList();
 
-    printf("The nuber of compositions: %d\n", count(head));
-    print_names(head);
     push(head);
-    printf("The nuber of compositions: %d\n", count(head));
-    print_names(head);
     removeEl(head);
     printf("The nuber of compositions: %d\n", count(head));
     print_names(head);
