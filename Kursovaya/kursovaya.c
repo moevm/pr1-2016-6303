@@ -2,16 +2,14 @@
 #include <stdlib.h>
 #include <string.h>
 
-struct MusicalComposition
+typedef struct MusicalComposition
 {
     char *name;
     char *author;
     int year;
     int status;
     struct MusicalComposition *next, *prev;
-};
-
-typedef struct MusicalComposition MusicalComposition;
+} MusicalComposition;
 
 // Функции для работы со списком MusicalComposition
 
@@ -31,15 +29,15 @@ MusicalComposition *createMusicalComposition(char *name, char *author, int year)
 MusicalComposition *createMusicalCompositionList()
 {
     int length;
+
     printf("Enter the number of compositions: ");
     scanf("%d", &length);
     getchar();
+    printf("Enter the information about %d compositions:\n", length);
 
     char **name = (char**)malloc(sizeof(char*)*length);
     char **author = (char**)malloc(sizeof(char*)*length);
     int *year = (int*)malloc(sizeof(int)*length);
-
-    printf("Enter the information about %d compositions:\n", length);
 
     for (int i = 0; i < length; ++i)
     {
@@ -82,7 +80,7 @@ void push(MusicalComposition *head)
 
     MusicalComposition *element_for_push = createMusicalComposition(name_for_push, author_for_push, year_for_push);
 
-    if (((head->status) == 0) || (((head->prev) == NULL) && ((head->next) == NULL)))
+    if ((head->status) == 0)
         memcpy(head, element_for_push, sizeof(MusicalComposition));
     else
     {
@@ -133,10 +131,11 @@ void removeEl(MusicalComposition *head)
             }
             else
             {
-                curr = temp->next; curr->prev->prev->next = curr;
-                curr = temp->prev; curr->next->next->prev = curr;
+                temp->prev->next = temp->next;
+                temp->next->prev = temp->prev;
+                curr = temp->next;
                 free(temp);
-                temp = curr->next;
+                temp = curr;
             }
             --amount;
         }
@@ -198,19 +197,18 @@ int main()
     //Функция createMusicalCompositionList всегда вызывается первой и всего один раз
     MusicalComposition *head = createMusicalCompositionList();
 
-    print_names(head);
     printf("The nuber of compositions: %d\n", count(head));
+    print_names(head);
     push(head);
     printf("The nuber of compositions: %d\n", count(head));
+    print_names(head);
     removeEl(head);
-    print_names(head);
     printf("The nuber of compositions: %d\n", count(head));
-    push(head);
     print_names(head);
-    printf("The nuber of compositions: %d\n", count(head));
-    
+
     //Вывзов фунции сортировки
     sort(head);
+    printf("The nuber of compositions: %d\n", count(head));
     print_names(head);
 
     return 0;
