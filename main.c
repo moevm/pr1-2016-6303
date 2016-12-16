@@ -1,4 +1,3 @@
-#include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
 
@@ -55,7 +54,8 @@ while (head->next != NULL)
 
 void removeEl(MusicalComposition* head, char* name_for_remove)
 {
-    while (head->next != NULL)
+    MusicalComposition* buf=head;
+    while (head != NULL)
     {
         if (strcmp(head->name,name_for_remove) == 0 )
         {
@@ -63,16 +63,20 @@ void removeEl(MusicalComposition* head, char* name_for_remove)
             {
                 *head = *head->next;
                 head->prev=NULL;
+                buf=head;
             }
             else if (head->next == NULL)
             {
                 head->prev->next = NULL;
+                buf=head;
             }
             else 
             {
                 head->prev->next = head->next;
                 head->next->prev = head->prev;
+                buf=head;
             }   
+            free(buf);
         }
         head=head->next;
     }
@@ -98,7 +102,6 @@ void print_names(MusicalComposition* head)
   }
 }
 
-// 
 int cut(MusicalComposition* head, int i, int j) 
 { 
 int count = 1; 
@@ -106,25 +109,29 @@ if (i < j && i != 0 && j != 0 && head != NULL)
     {
         for (count;count <= j;count++) 
             { 
-                if (count != i && count < i) 
+                if (count < i) 
                 { 
                     *head=*head->next; 
                     head->prev=NULL; 
                 } 
-                if (count > i && count < j) 
+                if (count > i && count <  j) 
                 { 
-                    head=head->next; 
+                    head=head->next;
                 } 
-                else if (count == j) head->next=NULL; 
+                    else if (count == j)
+		{
+		   head=head->next;
+		   head->next=NULL;
+		}
             }
         return 0;       
     }
-else return 1;
+    else return 1;
 }
 
 
 int main(){
-    int length,i,j;
+    int length,c,d;
     scanf("%d\n", &length);  
 
     char** names = (char**)malloc(sizeof(char*)*length);
@@ -182,16 +189,15 @@ int main(){
 
     k = count(head);
     printf("%d\n", k);
-
-    
-    scanf(&i,&j);
-    cut(head, i, j);
+    printf("Введите начало и конец среза (числа через пробел)\n");
+    scanf("%d %d",&c,&d);
+    cut(head, c, d);
     print_names(head);
-
+   while (head->next)
+    {
+     MusicalComposition* buf=head;
+     head=head->next;
+     free(buf);
+    }
     return 0;
-    
-    free(names);
-    free(authors);
-    free(years);
-    free(head);
 }
