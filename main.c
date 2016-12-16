@@ -189,5 +189,9 @@ int main(){
     print_names(head);
 
     return 0;
-
+    
+    free(names);
+    free(authors);
+    free(years);
+    free(head);
 }
