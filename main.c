@@ -124,7 +124,7 @@ else return 1;
 
 
 int main(){
-    int length;
+    int length,i,j;
     scanf("%d\n", &length);  
 
     char** names = (char**)malloc(sizeof(char*)*length);
@@ -184,7 +184,7 @@ int main(){
     printf("%d\n", k);
 
     
-    scanf(i,j);
+    scanf(&i,&j);
     cut(head, i, j);
     print_names(head);
 
