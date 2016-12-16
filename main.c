@@ -119,10 +119,10 @@ if (i < j && i != 0 && j != 0 && head != NULL)
                     head=head->next;
                 } 
                     else if (count == j)
-		{
-		   head=head->next;
-		   head->next=NULL;
-		}
+        {
+           head=head->next;
+           head->next=NULL;
+        }
             }
         return 0;       
     }
