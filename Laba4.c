@@ -58,10 +58,10 @@ void removeEl(char* name_for_remove)
                 if(tmp == head)
                 {
                     *head = *head->next;
-                    head->previous = NULL;
+                    head->prev = NULL;
                     if(head->next != NULL)
                     {
-                        head->next->previous = head;
+                        head->next->prev = head;
                     }
                     tmp = head;
                     continue;
@@ -71,8 +71,8 @@ void removeEl(char* name_for_remove)
                     tmp = tmp->previous;
                     tmp->next = NULL;
                 } else {
-                    tmp->next->previous = tmp->previous;
-                    tmp->previous->next = tmp->next;
+                    tmp->next->prev = tmp->prev;
+                    tmp->prev->next = tmp->next;
                 }
             }
         tmp = tmp->next;
