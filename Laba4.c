@@ -49,25 +49,33 @@ void push(MusicalComposition * head, MusicalComposition* element) {
   pp->prev= tmp;
     
 }
-void removeEl(MusicalComposition* head, char* name_for_remove) {
-    MusicalComposition * tmp = head;
-    if (strcmp(tmp->name , name_for_remove) == 0) {
-        head=head->next;
-        tmp=head;
-        tmp->prev=NULL; 
-    }
-    while ( strcmp(tmp->name , name_for_remove) !=0 && tmp->next != NULL ) {
+void removeEl(char* name_for_remove)
+{
+    MusicalComposition *tmp = head;
+  	while(tmp != NULL) {
+        if(strcmp(tmp->name, name_for_remove) == 0)
+            {
+                if(tmp == head)
+                {
+                    *head = *head->next;
+                    head->previous = NULL;
+                    if(head->next != NULL)
+                    {
+                        head->next->previous = head;
+                    }
+                    tmp = head;
+                    continue;
+                }
+                else if(tmp->next == NULL)
+                {
+                    tmp = tmp->previous;
+                    tmp->next = NULL;
+                } else {
+                    tmp->next->previous = tmp->previous;
+                    tmp->previous->next = tmp->next;
+                }
+            }
         tmp = tmp->next;
-    }
-    if (tmp->next != NULL && tmp->prev != NULL) {
-        tmp->prev->next = tmp->next;
-        tmp->next->prev = tmp->prev;
-    }
-    else if (tmp->next == NULL){
-        tmp->prev->next = NULL;
-    }
-    else if (tmp->prev == NULL) {
-        tmp->next->prev=NULL;
     }
 }
 int count(MusicalComposition* head) {
