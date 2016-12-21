@@ -49,7 +49,7 @@ int main()
             {
                 if (array[c] == 0)
                 {
-                    povtor == povtor++;
+                    povtor++;
                 }
             }
             printf("%d\n",povtor);break;
