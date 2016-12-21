@@ -49,7 +49,7 @@ void push(MusicalComposition * head, MusicalComposition* element) {
   pp->prev= tmp;
     
 }
-void removeEl(char* name_for_remove)
+void removeEl(MusicalComposition * head, char* name_for_remove)
 {
     MusicalComposition *tmp = head;
   	while(tmp != NULL) {
