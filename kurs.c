@@ -39,7 +39,7 @@ MusicalComposition* createMusicalCompositionList(char** array_names, char** arra
 }
 
 //функция вставляет в середину 3 элемента
-void push(MusicalComposition * head, MusicalComposition* element1, MusicalComposition* element2, MusicalComposition* element3) {
+void PUSH(MusicalComposition * head, MusicalComposition* element1, MusicalComposition* element2, MusicalComposition* element3) {
         MusicalComposition * tmp = head;
         int schet = 0;
         while ( tmp->next != NULL) {
@@ -63,36 +63,42 @@ void push(MusicalComposition * head, MusicalComposition* element1, MusicalCompos
 }
 
 //создание дополнительных функций, не используются в программе
-
+void push(MusicalComposition * head, MusicalComposition* element) {
+    MusicalComposition * tmp = head;
+    while ( tmp->next != NULL) {
+        tmp = tmp->next;
+    }
+    MusicalComposition* pp= createMusicalComposition(element->name, element->author, element->year);
+  tmp->next = pp;
+  pp->prev= tmp;
+    
+}
 void removeEl(MusicalComposition * head, char* name_for_remove)
 {
     MusicalComposition *tmp = head;
-  	while(tmp != NULL) {
-        if(strcmp(tmp->name, name_for_remove) == 0)
-            {
-                if(tmp == head)
-                {
-                    *head = *head->next;
-                    head->prev = NULL;
-                    if(head->next != NULL)
-                    {
-                        head->next->prev = head;
-                    }
-                    tmp = head;
-                    continue;
-                }
-                else if(tmp->next == NULL)
-                {
-                    tmp = tmp->previous;
-                    tmp->next = NULL;
-                } else {
-                    tmp->next->prev = tmp->prev;
-                    tmp->prev->next = tmp->next;
-                }
-            }
-        tmp = tmp->next;
-    }
-
+        while(tmp != NULL) {
+                if(strcmp(tmp->name, name_for_remove) == 0) {
+                        if(tmp == head) {
+                                 *head = *head->next;
+                                 head->prev = NULL;
+                                if(head->next != NULL) {
+                                head->next->prev = head;
+                                 }
+                                 tmp = head;
+                                 continue;
+                         }
+                         else if(tmp->next == NULL){
+                                 tmp = tmp->prev;
+                                 tmp->next = NULL;
+                         } 
+                         else {
+                                 tmp->next->prev = tmp->prev;
+                                 tmp->prev->next = tmp->next;
+                         }
+                 }
+                 tmp = tmp->next;
+        }
+}
 
 int count(MusicalComposition* head) {
         MusicalComposition * tmp = head;
@@ -173,7 +179,7 @@ fgets(name_for_push1, 80, stdin);
         MusicalComposition* element_for_push2 = createMusicalComposition(name_for_push2, author_for_push2, year_for_push2);
         MusicalComposition* element_for_push3 = createMusicalComposition(name_for_push3, author_for_push3, year_for_push3);
 
-        push(head, element_for_push1, element_for_push2, element_for_push3);
+        PUSH(head, element_for_push1, element_for_push2, element_for_push3);
         int k;
         MusicalComposition* t = head;
         for(k=0; k<(length+3); ++k) {
