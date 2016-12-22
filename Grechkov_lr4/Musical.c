@@ -11,26 +11,29 @@ struct MusicalComposition* next;
 struct MusicalComposition* prev;
 } MusicalComposition;
 
+MusicalComposition* head;
+
 MusicalComposition* createMusicalComposition(char* name, char* author, int year);
 
 MusicalComposition* createMusicalCompositionList(char** array_names, char** array_authors, int* array_years, int n);
 
-void push(MusicalComposition* head, MusicalComposition* element);
+void push(MusicalComposition* element);
 
-void removeEl(MusicalComposition* head, char* name_for_remove);
+void removeEl(char* name_for_remove);
 
-int count(MusicalComposition* head);
+int count();
 
-void print_names(MusicalComposition* head);
+void print_names();
 
-void find_and_remove(MusicalComposition* head, char* substring);
-
+int elementInList(char* element);
 int main(){
 int length;
 scanf("%d\n", &length);
+
 char** names = (char**)malloc(sizeof(char*)*length);
 char** authors = (char**)malloc(sizeof(char*)*length);
 int* years = (int*)malloc(sizeof(int)*length);
+
 for (int i=0;i<length;i++)
 {
 char name[80];
@@ -51,11 +54,12 @@ strcpy(authors[i], author);
 
 }
 MusicalComposition* head = createMusicalCompositionList(names, authors, years, length);
-char name_for_push[80];
-char author_for_push[80];
+char *name_for_push =(char*)malloc(sizeof(char)*80);
+char *author_for_push = (char*)malloc(sizeof(char)*80);
 int year_for_push;
 
-char name_for_remove[80];
+char *name_for_remove = (char*)malloc(sizeof(char)*80);
+
 fgets(name_for_push, 80, stdin);
 fgets(author_for_push, 80, stdin);
 fscanf(stdin, "%d\n", &year_for_push);
@@ -68,28 +72,20 @@ fgets(name_for_remove, 80, stdin);
 (*strstr(name_for_remove,"\n"))=0;
 
 int k = count(head);
+printf("%s %s %d\n", head->name, head->author, head->year);
 
-printf("Количество записей до добавления элемента = %d\n", k);
+printf("%d\n", k);
 push(head, element_for_push);
 
 k = count(head);
-printf("Количество записей после добавления элемента = %d\n", k);
-printf("Ваш музыкальный лист до удаления записи:\n");
-print_names(head);
-removeEl(head, name_for_remove);
-printf("Ваш музыкальный лист после удаления записи:\n");
-print_names(head);
-k = count(head);
-printf("Количество записей, после удаления %d\n", k);
+printf("%d\n", k);
 
-printf("Введите <<подстроку удаления>> для записей, которые вы хотите удалить\n");
-char* substring=(char*)malloc(sizeof(char)*80);
-fgets(substring,80,stdin);
-(*strstr(substring,"\n"))=0;
-find_and_remove(head, substring);
-printf("Финальная версия вашего музыкального листа:\n");
+removeEl(head, name_for_remove);
 print_names(head);
-k=count(head);
+
+k = count(head);
+printf("%d\n", k);
+
 free(names);
 free(authors);
 free(years);
@@ -109,7 +105,7 @@ MusicalComposition* createMusicalComposition(char* name, char* author, int year)
                                                          
 MusicalComposition* createMusicalCompositionList(char** array_names, char** array_authors, int* array_years, int n)
 {
-  MusicalComposition *head = createMusicalComposition(array_names[0],array_authors[0],array_years[0]);
+  head = createMusicalComposition(array_names[0],array_authors[0],array_years[0]);
   MusicalComposition *ThisList = head;
   for (int i=1;i<n;++i)
   {
@@ -121,48 +117,54 @@ MusicalComposition *newList = createMusicalComposition(array_names[i],array_auth
   return head;
 }
 
-void push(MusicalComposition* head, MusicalComposition* element)
+void push(MusicalComposition* element)
 {
   MusicalComposition* test = head;
   MusicalComposition* teck = createMusicalComposition(element->name, element->author, element->year);
+  if (head == NULL)
+  {
+    head=element;
+  }
+  else
+  {
   while(test->next!=NULL)
     test=test->next;
   test->next=teck;
   teck->prev=test;
+  }
 }
 
-void removeEl(MusicalComposition* head, char* name_for_remove)
+void removeEl( char* name_for_remove)
 {
-  MusicalComposition* test=head;
-    while(strcmp(test->name, name_for_remove) != 0 && test!=NULL)
-      test=test->next;
-    if (strcmp(test->name, name_for_remove) == 0)
-  {
-    if(test->next != NULL && test->prev != NULL) 
-     {
-     test->prev->next = test->next;
-     test->next->prev = test->prev;
-     }
-     else if(test->next==NULL && test->prev==NULL)
-     {
-      test=NULL;
-     }
-    else if(test->next == NULL) 
-     {
-     test->prev->next = NULL;
-     } 
-    else if(test->prev == NULL) 
-   {
-   test->year=test->next->year;         // при удалении 
-   test->name=test->next->name;         // первого элемента
-   test->author=test->next->author;     // делаем второй первым
-   test->next=test->next->next;        // и удаляем
-   test->next->prev=test;              // второй элемент
-   }
-  } 
-}  
+MusicalComposition *ptr;
+ptr=head;
+MusicalComposition* next;
+MusicalComposition* prev;
+while (elementInList(name_for_remove)==1) {
+ptr=head;
+while (*ptr->name!=*name_for_remove) {
+ptr=ptr->next;
+}
+if (ptr==head) {
+head=head->next;
+}
+else if(ptr->next==NULL) {
+prev=ptr->prev;
+prev->next=NULL;
+free(ptr);
+}
+else{
+next=ptr->next;
+prev=ptr->prev;
+next->prev=prev;
+prev->next=next;
+free(ptr);
+}
+}
 
-int count(MusicalComposition* head)
+}
+
+int count()
 {
   MusicalComposition* test =head;
   int count=0;
@@ -174,12 +176,37 @@ int count(MusicalComposition* head)
   return count;
 }
 
-void print_names(MusicalComposition* head)
+void print_names()
 {   
   MusicalComposition* test =head;
-  while(test!=NULL)
+  while(test)
   {
     printf("%s\n",test->name);
     test=test->next;
   }
 }
+    int elementInList(char* element)
+   {
+    MusicalComposition *ptr;
+    ptr=head;
+    int flag=0;
+    while (ptr!=NULL && flag==0) 
+    {
+    if (strcmp(ptr->name, element)==0)    
+     {
+    flag=1;
+     }
+    else
+     {
+    ptr=ptr->next;
+     }
+    }
+    if (flag==1) 
+     {
+    return 1;
+     }
+    else
+     {
+    return 0;
+     }
+    }
