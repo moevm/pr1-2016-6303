@@ -1,3 +1,0 @@
-
-
-char* get_name();
