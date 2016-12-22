@@ -136,6 +136,7 @@ void push(MusicalComposition* element)
 
 void removeEl( char* name_for_remove)
 {
+<<<<<<< HEAD:Grechkov_lr4/Musical.c
 MusicalComposition *ptr;
 ptr=head;
 MusicalComposition* next;
@@ -165,6 +166,31 @@ free(ptr);
 }
 
 int count()
+=======
+	MusicalComposition* test=head;
+    while(tast->name!=name_for_remove && test->next!=NULL)
+    	test=test->next;
+    if(test->next != NULL && test->prev != NULL) 
+     {
+     test->prev->next = test->next;
+     test->next->prev = test->prev;
+     }
+    else if(test->next == NULL) 
+ 	 {
+     test->prev->next = NULL;
+ 	 } 
+  	else if(test->prev == NULL) 
+ 	 {
+         test->year=test->next->year;         // при удалении 
+         test->name=test->next->name;         // первого элемента
+	 test->author=test->next->author;     // делаем второй первым
+	 test->next=test->next->next;        // и удаляем
+	 test->next->prev=test;              // второй элемент
+	 }
+}	 
+
+int count(MusicalComposition* head)
+>>>>>>> 0fae85c741cbb61c7558253c79795e9d28f702e5:Musical.c
 {
   MusicalComposition* test =head;
   int count=0;
@@ -178,6 +204,7 @@ int count()
 
 void print_names()
 {   
+<<<<<<< HEAD:Grechkov_lr4/Musical.c
   MusicalComposition* test =head;
   while(test)
   {
@@ -210,3 +237,12 @@ void print_names()
     return 0;
      }
     }
+=======
+	MusicalComposition* test =head;
+	while(test!=NULL)
+	{
+		printf("%s\n",test->name);
+		test=test->next;
+	}
+}
+>>>>>>> 0fae85c741cbb61c7558253c79795e9d28f702e5:Musical.c
