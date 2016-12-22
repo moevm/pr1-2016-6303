@@ -52,32 +52,30 @@ void push(MusicalComposition * head, MusicalComposition* element) {
 void removeEl(MusicalComposition * head, char* name_for_remove)
 {
     MusicalComposition *tmp = head;
-  	while(tmp != NULL) {
-        if(strcmp(tmp->name, name_for_remove) == 0)
-            {
-                if(tmp == head)
-                {
-                    *head = *head->next;
-                    head->prev = NULL;
-                    if(head->next != NULL)
-                    {
-                        head->next->prev = head;
-                    }
-                    tmp = head;
-                    continue;
-                }
-                else if(tmp->next == NULL)
-                {
-                    tmp = tmp->previous;
-                    tmp->next = NULL;
-                } else {
-                    tmp->next->prev = tmp->prev;
-                    tmp->prev->next = tmp->next;
-                }
-            }
-        tmp = tmp->next;
-    }
+        while(tmp != NULL) {
+                if(strcmp(tmp->name, name_for_remove) == 0) {
+                        if(tmp == head) {
+                                 *head = *head->next;
+                                 head->prev = NULL;
+                                if(head->next != NULL) {
+                                head->next->prev = head;
+                                 }
+                                 tmp = head;
+                                 continue;
+                         }
+                         else if(tmp->next == NULL){
+                                 tmp = tmp->prev;
+                                 tmp->next = NULL;
+                         } 
+                         else {
+                                 tmp->next->prev = tmp->prev;
+                                 tmp->prev->next = tmp->next;
+                         }
+                 }
+                 tmp = tmp->next;
+        }
 }
+
 int count(MusicalComposition* head) {
     MusicalComposition * tmp = head;
     int count = 0;
