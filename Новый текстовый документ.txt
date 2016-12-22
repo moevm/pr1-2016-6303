@@ -1,0 +1,76 @@
+#include <iostream>
+#include <cstring>
+#include <cstdlib>
+#include <cmath>
+#include <climits>
+
+using namespace std;
+
+int slog(int q,int w){
+    int sum(0);
+    for (int i = 0;i <= w;i++){
+         sum +=q;
+            if (INT_MAX - q < sum){
+                                  return -1;
+                                    }
+    }
+return sum;
+}
+
+int step(int d, int f){
+
+    for (int j = 0; j < f;j++){
+        if ((d = slog(d,f)) == -1){
+                                        return -1;
+                   }
+    }
+
+    return d;
+}
+
+int main() {
+  char c,s[5]="+-*^";
+  int a,b;
+  int otv(0);
+
+   cin>>c>>a>>b;
+
+    if (strchr(s,c)==NULL){
+        cout<<"Not Found";
+        return 0;
+    }
+
+    switch (c){
+        case '+':
+                otv = a + b;
+                if (INT_MAX - b < a){
+                                        cout<< "Integer Overflow";
+                                        return 0;
+                                    }
+                break;
+        case '-':
+                otv = a - b;
+                 if (INT_MIN + b > a){
+                                        cout<< "Integer Overflow";
+                                        return 0;
+                                    }
+                break;
+        case '*':
+                   if ((otv = slog(a,b)) == -1){
+                                        cout<< "Integer Overflow";
+                                        return 0;
+                   }
+
+                  break;
+        case '^':
+                   if ((otv = step(a,b)) == -1){
+                                        cout<< "Integer Overflow";
+                                        return 0;
+                   }
+                  break;
+    }
+
+    cout<<otv;
+
+
+}
