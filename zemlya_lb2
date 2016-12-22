@@ -1,0 +1,65 @@
+#include <stdio.h>
+
+int get_max(int arr[], int n)
+{
+    int max=arr[0];
+    for(int i=1; i<n; i++)
+    {if(arr[i]>max)
+        max=arr[i];}
+    return max;
+}
+int get_min(int arr[], int n)
+{
+    int min=arr[0];
+    for(int i=1; i<n; i++) {
+        if(arr[i]<min)
+            min=arr[i];}
+    return min;         
+}
+int get_sum(int arr[], int n)
+{
+int sum=0;
+    for(int i=0; i<n; i++){
+        int a=0;
+        a=arr[i]%2;
+            if(a==0){
+            sum=arr[i]+sum;}
+    }
+    return sum;
+}
+int get_count_first_el(int arr[], int n)
+{
+    int i, g=0;
+    for(int i=1; i<n; i++){
+        if(arr[0]==arr[i]){
+            g++;
+        }
+    }
+    return g;
+}
+void menu(int ch, int arr[], int n)
+{
+    int otv=0;
+    switch(ch) {
+        case 0:
+        otv = get_max(arr, n);
+        printf("%d",otv);
+        break;
+        
+        case 1:
+        otv = get_min(arr, n);
+        printf("%d",otv);
+        break;
+        case 2:
+       otv = get_sum(arr, n);
+        printf("%d",otv);
+        break;
+        case 3:
+        otv = get_count_first_el(arr,n);
+        printf("%d",otv);
+        break;
+        default:
+        printf("Данные некорректны");
+        break;
+    }
+}
