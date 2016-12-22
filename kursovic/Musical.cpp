@@ -202,7 +202,7 @@ void find_and_remove(char* substring)
    MusicalComposition* test= head;
    while(test)
    {  
-      if (strstr(test->name,substring)!=NULL)
+      if (strstr(test->author,substring)!=NULL)
         {
           removeEl(test->name);
         }
