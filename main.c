@@ -1,4 +1,6 @@
 #include <stdio.h>
+#include <malloc.h>
+#include <stdlib.h>
 #include <string.h>
 
 // Описание структуры MusicalComposition
@@ -44,62 +46,79 @@ MusicalComposition* createMusicalCompositionList(char** array_names, char** arra
 
 void push(MusicalComposition* head, MusicalComposition* element)
 {
-while (head->next != NULL)
+    MusicalComposition* buf = head;
+    while (buf->next)
     {
-        head=head->next;
+        buf=buf->next;
     }
-    head->next=element;
-    element->next=NULL;
-}
-
-void removeEl(MusicalComposition* head, char* name_for_remove)
-{
-    MusicalComposition* buf=head;
-    while (head != NULL)
-    {
-        if (strcmp(head->name,name_for_remove) == 0 )
-        {
-            if (head->prev == NULL)
-            {
-                *head = *head->next;
-                head->prev=NULL;
-                buf=head;
-            }
-            else if (head->next == NULL)
-            {
-                head->prev->next = NULL;
-                buf=head;
-            }
-            else 
-            {
-                head->prev->next = head->next;
-                head->next->prev = head->prev;
-                buf=head;
-            }   
-            free(buf);
-        }
-        head=head->next;
-    }
+    buf->next = element;
+    element->next = NULL;
+    element->prev = buf;
 }
 
 int count(MusicalComposition* head)
 {
-  int counter = 0;
-  while(head)
-  {
-    counter++;
-    head=head->next;
-  }
-  return counter;
+MusicalComposition* buf = head;
+int counter = 0;
+if(head->year != -1)
+    {
+        while (buf)
+        {
+            counter++;
+            buf = buf->next;
+        }
+    }
+    return counter;
+}
+
+void removeEl(MusicalComposition* head, char* name_for_remove)
+{
+    int counter = count(head);
+    MusicalComposition* buf = head;
+    while (buf)
+    {
+        if (strcmp(buf->name,name_for_remove) == 0 )
+        {
+            if (buf == head)
+            {
+                *head = *head->next;
+                head->prev=NULL;
+                if (head->next != NULL) 
+                { 
+                    head->next->prev = head;
+                    buf = head;
+                    counter--; 
+                }
+            }
+            else if (buf->next == NULL)
+            {
+                buf->prev->next = NULL;
+                counter--;
+            }
+            else 
+            {
+                buf->prev->next = buf->next;
+                buf->next->prev = buf->prev;
+                counter--;
+            }   
+        }
+        buf=buf->next;
+    }
+    if (counter == 1)
+        head->year = -1;
 }
 
 void print_names(MusicalComposition* head)
 {
-  while(head)
-  {
-    printf("%s\n",head->name);
-    head=head->next;
-  }
+    MusicalComposition* buf = head;
+    if(head->year != -1)
+    {
+        while (buf)
+        {
+            printf("%s\n", buf->name);
+            buf = buf->next;
+        }
+    }
 }
 
 int cut(MusicalComposition* head, int i, int j) 
@@ -193,11 +212,5 @@ int main(){
     scanf("%d %d",&c,&d);
     cut(head, c, d);
     print_names(head);
-   while (head->next)
-    {
-     MusicalComposition* buf=head;
-     head=head->next;
-     free(buf);
-    }
     return 0;
 }
