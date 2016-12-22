@@ -63,7 +63,6 @@ void push(MusicalComposition* head, MusicalComposition* element)
 
 void removeEl(MusicalComposition* head, char* name_for_remove)
 { 
-//According to the requirements the function can't delete the head element
 	if (head == NULL)
 	{
 		return;
