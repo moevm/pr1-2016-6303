@@ -8,7 +8,7 @@ void vvod(){
  if (q == 0){text = (char*)malloc(65*sizeof(char));q++;}
 
  if ((c = getchar()) == EOF){
-              printf("Количество предложений до %d и количество предложений после %d",kolx+koly,kolx);
+              printf("ГЉГ®Г«ГЁГ·ГҐГ±ГІГўГ® ГЇГ°ГҐГ¤Г«Г®Г¦ГҐГ­ГЁГ© Г¤Г® %d ГЁ ГЄГ®Г«ГЁГ·ГҐГ±ГІГўГ® ГЇГ°ГҐГ¤Г«Г®Г¦ГҐГ­ГЁГ© ГЇГ®Г±Г«ГҐ %d",kolx+koly,kolx);
               return 0;}
     if (strchr(s,c) == NULL){
                              text[k] = c;
