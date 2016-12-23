@@ -7,7 +7,7 @@ void menu(int ch, int arr[], int n){
         case 2:get_sum(arr,n);break;
         case 3:get_count_first_el(arr,n);break;
         default :
-            printf("Данные некорректны");  break;  
+            printf("Г„Е•Г­Г­Е±Дє Г­ДєД™Г®Д‘Д‘ДєД™Е€Г­Е±");  break;  
     }
 }
 }
