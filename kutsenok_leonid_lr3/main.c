@@ -38,7 +38,7 @@ int scan(char* input, int *current_size_max) {
       case 46: //точка
       case 59: //точка с запятой
         input[current_size] = c;
-        input[current_size + 1] = '\0'; //TODO: тут костыль (можем выйти за пределы)
+        input[current_size + 1] = '\0';
         counter_before++;
         counter_after++;
         return 0;//все хорошо
