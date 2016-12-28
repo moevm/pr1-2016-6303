@@ -106,26 +106,26 @@ void print_names() {
 
 MusicalComposition * PUSH(MusicalComposition* element1, MusicalComposition* element2, MusicalComposition* element3) {
   MusicalComposition * tmp = head;
-  int schet = 0;
-  while ( tmp->next != NULL) {
-        ++schet;
-        tmp = tmp->next;
-  }
-  for (int j=0; j<((schet/2)+1); ++j) {
-        tmp = tmp->prev;
-  }
+  int k=count();
+  int schet=0;
+  while(schet!=(k/2-1)) {
+       tmp=tmp->next;
+       ++schet;
+  } 
   MusicalComposition* second = tmp->next ;
   tmp->next = element1;
+  element1->prev=tmp;
   element1-> next = element2;
   element2->prev= element1;
 
   element2->next = element3;
   element3->prev= element2;
   element3->next=second;
+  second->prev=element3;
 
   return head;
-
 }
+
 
 
 int main(){
