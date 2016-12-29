@@ -4,7 +4,7 @@
 #include <stddef.h>
 
 
-
+// Описание структуры MusicalComposition
 typedef struct MusicalComposition
 {
 	char* name;
@@ -15,24 +15,26 @@ typedef struct MusicalComposition
 } MusicalComposition;
 
 
+// Создание структуры MusicalComposition
+
 MusicalComposition* createMusicalComposition(char* name, char* author, int year);
+
+// Функции для работы со списком MusicalComposition
 
 MusicalComposition* createMusicalCompositionList(char** array_names, char** array_authors, int* array_years, int n);
 
 void push(MusicalComposition* head, MusicalComposition* element);
 
-void removeEl(MusicalComposition* head, char* name_for_remove);
+void removeEl(MusicalComposition* head, char* name_for_remove); 
 
-int count(MusicalComposition* head);
+int count(MusicalComposition* head); 
 
 void print_names(MusicalComposition* head);
-
-void addtolist(MusicalComposition* head);
 
 
 int main(){
     int length;
-    scanf("%d\n", &length);
+    scanf("%d\n", &length);  
 
     char** names = (char**)malloc(sizeof(char*)*length);
     char** authors = (char**)malloc(sizeof(char*)*length);
@@ -84,15 +86,11 @@ int main(){
     k = count(head);
     printf("%d\n", k);
 
-    removeEl(head, name_for_remove);
+    removeEl(head, name_for_remove); 
     print_names(head);
 
     k = count(head);
     printf("%d\n", k);
-
-    addtolist(head);
-    print_names(head);
-    printf("%d\n",count(head));
 
     return 0;
 
@@ -158,6 +156,7 @@ void removeEl(MusicalComposition* head, char* name_for_remove)
 			else if (current->next == NULL && current->prev == NULL)
 			{
 				head=NULL;
+				current = head;
 			}
 		}else{
 			current = current->next;
@@ -189,39 +188,3 @@ void print_names(MusicalComposition* head)
 		current = current->next;
 	}
 }
-
-void addtolist(MusicalComposition* head)
-{
-	MusicalComposition* current = head;
-	int count = -1;
-	while (current!= NULL)
-	{
-		count++;
-		if(count%2!=0)
-        {
-            int j;
-    for(j=3;j>0;j--)
-    {
-    char name_for_push1[80];
-    char author_for_push1[80];
-    int year_for_push1;
-
-    fgets(name_for_push1, 80, stdin);
-    fgets(author_for_push1, 80, stdin);
-    fscanf(stdin, "%d\n", &year_for_push1);
-    (*strstr(name_for_push1,"\n"))=0;
-    (*strstr(author_for_push1,"\n"))=0;
-    MusicalComposition* element_for_push1 = createMusicalComposition(name_for_push1, author_for_push1, year_for_push1);
-          current->next->prev=element_for_push1;
-           element_for_push1->next=current->next;
-           element_for_push1->prev=current;
-           current->next=element_for_push1;
-           current=element_for_push1;
-    }
-        }
-        else
-            current = current->next;
-	}
-
-}
-
