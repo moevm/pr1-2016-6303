@@ -1,3 +1,4 @@
+//#include <stdafx.h>
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
@@ -21,6 +22,7 @@ void removeEl(MusicalComposition* head, char* name_for_remove);
 
 int count(MusicalComposition* head);
 
+void addtolist(MusicalComposition* head);
 void print_names(MusicalComposition* head);
 int main(){
 int length;
@@ -30,10 +32,9 @@ scanf("%d\n", &length);
 char** names = (char**)malloc(sizeof(char*)*length);
 char** authors = (char**)malloc(sizeof(char*)*length);
 int* years = (int*)malloc(sizeof(int)*length);
-int j;
+
 for (int i = 0; i<length; i++)
 {
-    j=i+1;
 	char name[80];
 	char author[80];
 
@@ -84,7 +85,9 @@ print_names(head);
 
 k = count(head);
 printf("Number of Groups Left:  %d\n", k);
-
+addtolist(head);
+k = count(head);
+print_names(head);
 return 0;
 
 }
@@ -177,4 +180,28 @@ void print_names(MusicalComposition* head)
 		printf("%s\n", current->name);
 		current = current->next;
 	}
+}
+
+void addtolist(MusicalComposition* head)
+{
+        MusicalComposition* current=head;
+        MusicalComposition* element_for_push1;
+        int k=count(head);
+        for (int i = 0; i < k; i++) {
+          if (i%2==0){
+            for (int j = 0; j < 3; j++)
+                {
+                    element_for_push1=createMusicalComposition("One-Dance", "Drake", 2016);
+                    element_for_push1->next=current->next;
+                    element_for_push1->prev=current;
+                if (current->next)
+                    current->next->prev=element_for_push1;
+                    current->next=element_for_push1;
+                    current=current->next;
+                }
+          }
+          else{
+            current=current->next->next;
+          }
+        }
 }
