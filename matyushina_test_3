@@ -1,0 +1,20 @@
+#include <stdio.h>
+#include<string.h>
+#include<stdlib.h>
+
+int main() {
+  char* ptr = malloc(100*sizeof(char));
+  char* a = malloc(1*sizeof(char));;
+    scanf("%s", ptr);
+    scanf("%s", a);
+    int i;
+    int j=0;
+    int count=0;
+    for (i=0; i<strlen(ptr); ++i) {
+        if ( ptr[i]==a[j])  {
+            ++count;
+        }
+    }
+    printf("%d\n", count);
+    return 0;
+}
