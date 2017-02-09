@@ -1,0 +1,13 @@
+#include <stdio.h>
+int main()
+{
+  int a, b, i, c;
+  printf("Введите число:\n");
+  scanf("%d", &a);
+  printf("Введите степень:\n");
+  scanf("%d", &b);
+  c = a;
+  for(i = 1; i < b; i++)
+      a = a * c;
+  printf ("%d\n", a);
+}
