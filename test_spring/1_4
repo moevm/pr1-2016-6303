@@ -4,16 +4,13 @@
 
 int main()
 {
-  char *str;
+  char str[100];
   int i;
-  str = (char*)malloc(strlen(str)*sizeof(char));
-  printf("Введите строку: ");
   str = gets(str);
   char sym;
-  printf("Введите символ: ");
-  scanf("%c", &sym);
+  scanf("%c", &s);
   for (i=0; i<strlen(str); i++)
-    if (str[i] != sym)
+    if (str[i] != s)
     {
       printf("%c\n",str[i]);
     }
