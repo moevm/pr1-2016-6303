@@ -7,10 +7,10 @@ int main()
     scanf("%s %c",a,&b);
     for(i=0;a[i]!=NULL;i++)
     {
-        if (a[i]==b)
-        i++;
+        if (a[i]!=b)
         d[j++]=a[i];
     }
+    d[j]='\0';
     printf("%s\n",d);
     return 0;
 }
