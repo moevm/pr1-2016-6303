@@ -1,0 +1,16 @@
+#include <stdio.h>
+
+int main() {
+	int a,n,i,result;
+	scanf("%d", &a);
+	scanf("%d", &n);
+	if (n==0) { result=1; }
+	else {
+		result=a;
+	    for (i=1; i<n; ++i) {
+		    result=result*a;
+	    }
+	}
+	printf("%d\n", result);
+	return 0;
+}
