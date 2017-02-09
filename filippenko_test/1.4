@@ -1,0 +1,24 @@
+1.4
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+
+int main()
+{
+    int i;
+    int k=0;
+    char* str;
+    str=(char*)malloc(1000*sizeof(char));
+    scanf("%s",str);
+    
+    char s;
+    scanf("%s", &s);
+    
+    for(i=0; i<strlen(str); i++)
+    {
+      if (s!=str[i])  
+      str[i++]=str[i];
+    }
+    
+    printf("%s", str);
+}
