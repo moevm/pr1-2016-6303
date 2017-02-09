@@ -1,0 +1,16 @@
+#include <stdio.h>
+int main()
+{
+    int i=0,len=0;
+    scanf("%d", &len);
+	char *str=(char*)malloc(len*sizeof(char));
+	for (i=0; i<len; i++)
+	{
+	    scanf("%c", &str[i]);
+	}
+	for (i=0; i<len; i=i+2)
+	{
+	    printf("%c",str[i]);
+	}
+	return 0;
+}
