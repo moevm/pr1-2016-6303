@@ -1,0 +1,22 @@
+1.2.
+#include <stdio.h>
+#include <string.h>
+
+int main() {
+
+    char symbol;
+    scanf("%s",&symbol);
+    int i=0;
+   
+    while(symbol != '\n')
+    {
+        symbol=getchar();
+        i++;
+        if ((i%2) == 0)
+        {
+            putchar(symbol);
+        }
+        
+    }
+return 0;
+}
