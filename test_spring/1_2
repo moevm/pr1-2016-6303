@@ -1,0 +1,14 @@
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+
+int main()
+{
+  char *str;
+  int i;
+  str = (char*)malloc(strlen(str)*sizeof(char));
+  printf("Введите строку: ");
+  str = gets(str);
+  for (i=1; i<strlen(str); i+=2)
+    printf("%c\n",str[i]);
+}
