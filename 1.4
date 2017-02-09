@@ -1,0 +1,18 @@
+#include <stdio.h>
+#include <string.h>
+int main()
+{
+    char c;
+    char str[1000];
+    int i=0;
+    scanf("%s", str);
+    c=getchar();
+    c=getchar();
+    int len=strlen(str);
+    for (i=0; i<len; i++)
+    {
+        if (str[i] == c) continue;
+        else printf("%c",str[i]);
+    }
+    return 0;
+}
