@@ -1,0 +1,19 @@
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+
+int main()
+{
+  char *str;
+  int i, count = 0;
+  str = (char*)malloc(strlen(str)*sizeof(char));
+  printf("Введите строку: ");
+  str = gets(str);
+  char sym;
+  printf("Введите символ: ");
+  scanf("%c", &sym);
+  for (i=0; i<strlen(str); i++)
+    if (str[i] == sym)
+      count ++;
+  printf ("%d\n", count);
+}
