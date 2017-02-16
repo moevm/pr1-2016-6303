@@ -3,7 +3,6 @@
  
 int main() {
 int n, min, max;
-printf("Размер массива=\n");
 scanf("%d", &n);
 int *mass=malloc(n*sizeof(int));
  
