@@ -1,0 +1,49 @@
+#include <iostream>
+#include <cmath>
+#include <stdio.h>
+using namespace std;
+int a[10000][10000],b[10000][10000];
+void st(int x,int y,int k){
+    
+    b[x][y] = k;
+    if (a[x+1][y] == 1 && b[x+1][y] == 0){st(x+1,y,k+1);}
+    if (a[x][y+1] == 1 && b[x][y+1] == 0){st(x,y+1,k+1);}
+    if (a[x-1][y] == 1 && b[x-1][y] == 0){st(x-1,y,k+1);}
+    if (a[x][y-1] == 1 && b[x][y-1] == 0){st(x,y-1,k+1);}
+}
+
+int main()
+{
+    int n,m;
+    
+    
+    cin>>n>>m;
+    for (int i=0;i<=n;i++){
+        for (int j=0;j<=m;j++){
+            a[i][j] = 0;
+        }
+    }
+    for (int i = 1;i<=n;i++){
+        for (int j =1;j<=m;j++){
+            cin>>a[i][j];
+            
+        }
+    }
+    for (int i = 1;i<=n;i++){
+        for (int j =1;j<=m;j++){
+            if (a[i][j] == 1 && b[i][j] == 0){
+                st(i,j,1);
+            }
+            
+        }
+    }
+    int max =0;
+   for (int i=1;i<=n;i++){
+        for (int j=1;j<=m;j++){
+            if (b[i][j] > max){max = b[i][j];}
+        }
+       
+    } 
+    cout<<max;
+}
+

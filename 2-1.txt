@@ -1,0 +1,55 @@
+#include <iostream>
+#include <string>
+#include <stdio.h>
+using namespace std;
+
+int main()
+{
+    int i = 0;
+    string s="",s1="",b[1000];
+    int a[1000],k=1;
+    char c;
+    c = getchar();
+    do {
+        if (c == ' ' || c == EOF){
+            i++;
+            if (s == s1){
+              
+                a[i] = k;
+                k++;
+                b[i] = s;
+         
+                
+            }
+            else{
+                k=1;
+                
+            }
+            s1 = s;
+            s="";
+        }
+        else{
+            s = s + c;
+        }
+    }
+    while((c = getchar())!=EOF);
+    if (s == s1){
+              
+                a[i] = k;
+                k++;
+                b[i] = s;
+         
+                
+            }
+            else{
+                k=1;
+                
+            }
+            s1 = s;
+            s="";
+     int max=0;
+    string e="";
+    for (int j=0;j<1000;j++){
+        if (a[j] > max){max = a[j];e=b[j];}}
+        cout<<max+1<<"("<<e<<")";
+}
