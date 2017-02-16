@@ -3,7 +3,6 @@
 int main() {
 int n;
 int * *p;
-printf("Размер массива=\n");
 scanf("%d", &n);
 
 p = (int **)calloc(n, sizeof(*p));
