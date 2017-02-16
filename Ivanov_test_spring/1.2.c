@@ -1,3 +1,4 @@
+/* Иванов Д.В. */
 #include <stdio.h>
 
 int main()
