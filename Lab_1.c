@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <time.h> // работа со временем
 
-#define S_NUMBER 0
+#define S_NUMBER 0 // искомое число
 #define ARR_SIZE 1000 // для тестирования мне была необходима возможность установки меньшего размера массива в кратчайшие сроки
 
 int compare(const void* arg_1, const void* arg_2); // прототип функции сравнения чисел для qsort
