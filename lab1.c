@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <time.h>
 #include <stdlib.h>
-#define LENGTH 1000 //длина массива
+#define LENGTH 1000 //lenth of array
 
 int compare(const void * a, const void * b);
 
@@ -11,7 +11,7 @@ int main()
 	int i, j;
 	for (i = 0; i < LENGTH; i++)
 		scanf("%d", &array1[i]);
-	memcpy(array2, array1, LENGTH * sizeof(int)); //дублирование массива
+	memcpy(array2, array1, LENGTH * sizeof(int)); //array duplication
 	clock_t sort_start, sort_end, qsort_start, qsort_end;
 	sort_start = clock();
 	for (i = 0; i < (LENGTH - 1); i++)
