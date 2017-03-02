@@ -21,7 +21,7 @@ int main()
 } 
 
 
-int compare(const void * a, const void * b) 
+int compare(const void *a, const void *b) 
 { 
 	return (abs(*(int*)b) - abs(*(int*)a)); 
 }
