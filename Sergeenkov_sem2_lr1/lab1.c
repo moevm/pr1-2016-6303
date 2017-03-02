@@ -1,7 +1,11 @@
 /***********************************************************
 ******Code for laboratory work #1
 ------------------------------------------------------------
-******Created by Mikhail Sergeenkov on 28th of February, 2016
+******The program sorts array using qsort and finds zero using
+******bsearch feom standart library. It calculates how much
+******time program does its work using system call clock().
+------------------------------------------------------------
+******Created by Mikhail Sergeenkov on the 28th of February, 2017
 ******sergeenkov.michael@gmail.com
 ******github.com/Mishelles
 ************************************************************/
