@@ -3,7 +3,7 @@
 #include <stdlib.h> 
 #define lenght 1000
 
-int compare(const void *, const void *); //прототив функции compare(для функции сортировки qsort)
+int compare(const void *, const void *);	//прототив функции compare(для функции сортировки qsort)
 
 int main() 
 { 
