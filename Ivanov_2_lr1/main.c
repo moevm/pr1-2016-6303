@@ -17,7 +17,7 @@ int main()
 	for (int i = 0; i < LenghtOfArray; i++) 
 		printf("%d ", ArrayOfNumbers[i]); 
 	printf("\n%f", difftime(time_of_end, time_of_start)); 
-return 0; 
+	return 0; 
 } 
 
 
