@@ -4,9 +4,8 @@
 #include <time.h>
 int SortAndCompare(int* arr, int n, int elem);   // прототип основной функции для работы с программой
 int comp(int* a, int* b);
-int funccompar (int* key,int* cmpelem);
 
-#define m 1000
+#define m 10
 
 int main()
 {
@@ -30,7 +29,7 @@ int SortAndCompare(int *arr, int n, int elem)
 	char s2[15]="doesn't exist"; 
 	qsort(arr, n,sizeof(int),( int(*) (const void *, const void*)) comp);  // сортировка массива 
 	int timeqsort1=clock();
-	int* ptr = (int*)bsearch(&elem, arr, n, sizeof(int), ( int(*) (const void *, const void*)) funccompar);  // бинарный поиск элемента elem
+	int* ptr = (int*)bsearch(&elem, arr, n, sizeof(int), ( int(*) (const void *, const void*)) comp);  // бинарный поиск элемента elem
 	int timeqsort2=clock();
 	if (ptr!=NULL) printf("%s\n",s1);  // вывод информации о наличии элемента в массиве
 	else printf("%s\n",s2);
@@ -54,9 +53,4 @@ int SortAndCompare(int *arr, int n, int elem)
 int comp(int* a, int* b)
 {
 	return *a - *b;
-}
-int funccompar (int* key,int* cmpelem)
-{
-
-  return ( *key - *cmpelem);
 }
