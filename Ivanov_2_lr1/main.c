@@ -3,7 +3,7 @@
 #include <stdlib.h> 
 #define LenghtOfArray 1000
 
-int compare(const void *, const void *); 
+int compare(const void *a, const void *b); 
 
 int main() 
 { 
@@ -21,7 +21,7 @@ int main()
 } 
 
 
-int compare(const void * a, const void * b) 
+int compare(const void *a, const void *b) 
 { 
 	return (abs(*(int*)b) - abs(*(int*)a)); 
 }
