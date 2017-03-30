@@ -1,51 +1,50 @@
+//Ченцов Данил 6303//
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
 
-int cmp_str(const void * p1, const void * p2) //определение функции сравнения слов
-    {
-    return *(char*)p1 - *(char*)p2;
+
+#define text_len 1001 //максимальная длина строки
+#define word_size 31 //максимальная длина слова
+
+
+int cmp_str(const void* p1, const void* p2) {//определение функции сравнения слов
+    return (strcmp(*(char**) p1, *(char**) p2));
 }
 
 
- int main(){
+ int main() {
+    char* str = (char*) malloc(word_size * sizeof(char));
+    char* string = (char*) malloc(text_len * sizeof(char));
 
+    fgets(string, text_len, stdin);
+    scanf("%s", str);
 
-  char str[1000];
-  fgets(str, 1001, stdin);
- 
+    string[strlen(string)-1] = '\0';
+    char** str_array = (char**) malloc(sizeof(char*) * 300);
+    char* pch = strtok(string, " .");
 
-  char str_array [1000] [30];
-
-
-  int len=0;
-
-
-    char *pch = strtok (str," .\n"); //во втором параметре указаны разделители (пробел, точка, элемент переноса строки)
-    
-  while (pch != NULL) //пока есть лексемы
-  {   
-      strcpy(str_array[len], pch);
-      pch = strtok (NULL, " .\n");
-      len++;
-
-  }
+    int len;
+    for(len = 0; pch != NULL; len++) {//пока есть лексемы
+        str_array[len] = pch;
+        pch = strtok(NULL, " .");
+}
 
 
 
  //сортировка//
 
-   qsort(str_array[0], len, 30, cmp_str);
+qsort(str_array, len, sizeof(char*), cmp_str);
 
 
 
 
 //двоичный поиск слова в массиве//
 
-char key[4]="str";
 
-int * ptrItem = (int*) bsearch(key, str_array[0], len, 30, cmp_str);
+char * ptrItem = (char*) bsearch(&str, str_array, len, sizeof(char*), cmp_str);
 if (ptrItem != NULL){
   printf("exists");
 }
@@ -55,4 +54,4 @@ else{
 
 
   return 0;
- }
+}
