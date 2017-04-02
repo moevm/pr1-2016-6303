@@ -1,4 +1,4 @@
-// lab №2 "simulation of stack" by Shevchenko Danil, 6303 group
+// lab №2 "simulation of stack" by Shevchenko Danil, 6303 group.
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
