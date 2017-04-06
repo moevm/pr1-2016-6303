@@ -3,11 +3,11 @@
 #include <time.h>
 #define N 1000
 
-int funccmp( const void *x1, const void *x2){ //функция сравнения двух эл-тов
+int funccmp( const void *x1, const void *x2){ //С„СѓРЅРєС†РёСЏ СЃСЂР°РІРЅРµРЅРёСЏ РґРІСѓС… СЌР»-С‚РѕРІ
 return (*(int*)x1 - *(int*)x2);
 }
 
-int comp (const int *a, const int *b)//компаратор для qsort
+int comp (const int *a, const int *b)//РєРѕРјРїР°СЂР°С‚РѕСЂ РґР»СЏ qsort
 {
 return *a - *b;
 }
@@ -17,27 +17,27 @@ return *a - *b;
 int main() {
   int i;
   int timeBeg1, timeBeg2, timeEnd1, timeEnd2;
-  int key=0;//ключ для двоичного поиска
+  int key=0;//РєР»СЋС‡ РґР»СЏ РґРІРѕРёС‡РЅРѕРіРѕ РїРѕРёСЃРєР°
   int* arr=(int*)malloc(sizeof(int)*N);
-  for (i=0;i<N;i++)//заполнение массива числами
+  for (i=0;i<N;i++)//Р·Р°РїРѕР»РЅРµРЅРёРµ РјР°СЃСЃРёРІР° С‡РёСЃР»Р°РјРё
     {
      scanf("%d", &arr[i]);
     }
 
-    qsort(arr, N, sizeof(int),(int(*)(const void *,const void *))comp); //сортировка массива через алгоритм быстрой сортировки
-    timeBeg1 = clock(); //время начала поиска
+    qsort(arr, N, sizeof(int),(int(*)(const void *,const void *))comp); //СЃРѕСЂС‚РёСЂРѕРІРєР° РјР°СЃСЃРёРІР° С‡РµСЂРµР· Р°Р»РіРѕСЂРёС‚Рј Р±С‹СЃС‚СЂРѕР№ СЃРѕСЂС‚РёСЂРѕРІРєРё
+    timeBeg1 = clock(); //РІСЂРµРјСЏ РЅР°С‡Р°Р»Р° Р±РёРЅР°СЂРЅРѕРіРѕ РїРѕРёСЃРєР°
     int *ptrItem=(int*) bsearch( &key, arr, 100, sizeof(int), funccmp);
-    timeEnd1 = clock(); //время конца поиска
+    timeEnd1 = clock(); //РІСЂРµРјСЏ Р·Р°РІРµСЂС€РµРЅРёСЏ Р±РёРЅР°СЂРЅРѕРіРѕ РїРѕРёСЃРєР°
 
-    if (ptrItem==NULL) {  //вывод результата двоичного поиска
+    if (ptrItem==NULL) {  //РІС‹РІРѕРґ СЂРµР·СѓР»СЊС‚Р°С‚Р° РїРѕРёСЃРєР°
     printf("doesn't exist\n");}
     else {
       printf("exists\n");}
 
-    printf("%d\n",timeEnd1-timeBeg1);//вывод времени двоичного поиска
+    printf("%d\n",timeEnd1-timeBeg1);//РІС‹РІРѕРґ РІСЂРµРјРµРЅРё СЂР°Р±РѕС‚С‹ Р±РёРЅР°СЂРЅРѕРіРѕ РїРѕРёСЃРєР°
 
-    int l = 0; //поиск 0 перебором
-    timeBeg2 = clock();
+    int l = 0; //РїРѕРёСЃРє РїРµСЂРµР±РѕСЂРѕРј
+    timeBeg2 = clock();//РІСЂРµРјСЏ РЅР°С‡Р°Р»Р° РїРѕРёСЃРєР° РїРµСЂРµР±РѕСЂРѕРј
     for (i=0;i<N;i++)
     {
         if (arr[i]==key)
@@ -45,9 +45,9 @@ int main() {
             l=1;
         }
     }
-    timeEnd2 = clock();
+    timeEnd2 = clock();//РІСЂРµРјСЏ Р·Р°РІРµСЂС€РµРЅРёСЏ РїРѕРёСЃРєР° РїРµСЂРµР±РѕСЂРѕРј
 
-    if (l==1)//вывод результата поиска перебором
+    if (l==1)//РІС‹РІРѕРґ СЂРµР·СѓР»СЊС‚Р°С‚Р° РїРѕРёСЃРєР° РїРµСЂРµР±РѕСЂРѕРј
     {
         printf("exists\n");
     }
@@ -55,7 +55,7 @@ int main() {
     {
         printf("doesn't exists\n");
     }
-    printf("%d\n",timeEnd2-timeBeg2);//вывод времени поиска перебором
+    printf("%d\n",timeEnd2-timeBeg2);//РІС‹РІРѕРґ РІСЂРµРјРµРЅРё РїРѕРёСЃРєР° РїРµСЂРµР±РѕСЂРѕРј
 free(arr);
   return 0;
 }
