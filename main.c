@@ -2,43 +2,47 @@
 #include <stdlib.h>
 #include <time.h>
 
-int compare(const void * x1, const void * x2)   // функция сравнения элементов массива
+#define For(i,a,b) for (i=a;i<b;i++)
+
+const int N = 1000;
+
+int compare(const void * x1, const void * x2)   // С„СѓРЅРєС†РёСЏ СЃСЂР°РІРЅРµРЅРёСЏ СЌР»РµРјРµРЅС‚РѕРІ РјР°СЃСЃРёРІР°
 {
-  return ( *(int*)x1 - *(int*)x2 );              // если результат вычитания равен 0, то числа равны, < 0: x1 < x2; > 0: x1 > x2
+  return ( *(int*)x1 - *(int*)x2 );              // РµСЃР»Рё СЂРµР·СѓР»СЊС‚Р°С‚ РІС‹С‡РёС‚Р°РЅРёСЏ СЂР°РІРµРЅ 0, С‚Рѕ С‡РёСЃР»Р° СЂР°РІРЅС‹, < 0: x1 < x2; > 0: x1 > x2
 }
 
 int main() {
-  int *a ,end,start; // e,s переменные для подсчета времени
-   a = (int* )malloc(1000*sizeof(int));
-    for(int i = 0;i<1000;i++){ //считываем массив
+  int *a ,end,start,i; // e,s РїРµСЂРµРјРµРЅРЅС‹Рµ РґР»СЏ РїРѕРґСЃС‡РµС‚Р° РІСЂРµРјРµРЅРё
+   a = (int* )malloc(N*sizeof(int));
+    For(i,0,N){ //СЃС‡РёС‚С‹РІР°РµРј РјР°СЃСЃРёРІ
         scanf("%d",&a[i]);
-    }
+    } 
     /*quicksort*/
-    qsort(a, 1000, sizeof(int), compare);
+    qsort(a, N, sizeof(int), compare);
     /**/
-
+    
     /*find 0 Binary search|| times*/
     start = clock();
-    int number = 0;
-    int * ptrItem = (int*) bsearch(&number, a, 1000, sizeof (int), compare);
+    int number = 0;                                                                       
+    int * ptrItem = (int*) bsearch(&number, a, N, sizeof (int), compare);
     end = clock();
-    /**/
-
-
+    /**/  
+    
+    
     /**/
     if (ptrItem != NULL){
         printf("exists\n");}
     else{
         printf("doesn't exist\n");}
     printf("%d",end-start);
-    /**/
-
-
+    /**/ 
+    
+    
     /*find 0 Full search*/
-    //bool Fd_Nm = false;
-    int Fd_Nm = 0; // переменная 1 - наличие, 0 - отсутствие
+    //bool Fd_Nm = false; 
+    int Fd_Nm = 0;
     start = clock();
-    for (int i = 0;i<1000;i++){
+    For(i,0,N){
         if (a[i] == 0){
             /*Fd_Nm = true;*/Fd_Nm = 1;break;
         }
@@ -49,7 +53,7 @@ int main() {
     }else{
         printf("doesn't exist\n");
     }
-    printf("%d",end - start);
+    printf("%d",end-start);
     /**/
     free(a);
   return 0;
