@@ -18,21 +18,24 @@ typedef struct stack
 } stack;
 
 //  функция добавляет в список структуру с именем последнего открывающего
-stack* push (char* tag, stack* current)
+void push (char* tag, stack** current)
 {
     stack* next = (stack*)malloc(sizeof(stack));
     next->tag = tag;
-    next->prev = current;
-    return next;
+    next->prev = *current;
+    *current = next;
 }
 
 //  функция удаляет последний элемент списка
-stack* pop (stack* current)
+char* pop (stack** current)
 {
-    stack* temp = current->prev;
-    free(current);
+    char* temp = (*current)->tag;
+    stack* prev = *current;
+    *current = (*current)->prev;
+    free(prev);
     return temp;
 }
+
 
 //  функция извлекает значение последнего элемента списка
 char* top (stack* current)
@@ -69,14 +72,14 @@ int main()
 
     fgets(str, (LENGTH + 2), stdin);
 
-    ptrOpen = strstr(str, "<");
-    ptrClose = strstr(str, ">");
+    ptrOpen = strchr(str, '<');
+    ptrClose = strchr(str, '>');
 
     while (ptrOpen)
     {
         if (*(ptrOpen + 1) == '/')
             if (!strncmp((ptrOpen + 2), top(current), (ptrClose - ptrOpen - 2)))
-                current = pop(current);
+                pop(&current);
             else
             {
                 delete(current);
@@ -87,10 +90,10 @@ int main()
         {
             tag = strtok((ptrOpen + 1), ">");
             if (strcmp(tag, "br") && strcmp(tag, "hr"))
-                current = push(tag, current);
+                push(tag, &current);
         }
-        ptrOpen = strstr((ptrClose + 1), "<");
-        ptrClose = strstr((ptrClose + 1), ">");
+        ptrOpen = strchr((ptrClose + 1), '<');
+        ptrClose = strchr((ptrClose + 1), '>');
     }
 
     //  если были закрыты все открывающие теги (осталась только голова списка),
