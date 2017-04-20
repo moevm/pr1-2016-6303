@@ -1,138 +1,157 @@
-#include <stdlib.h>
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 
-    typedef struct MusicalComposition {
-        char * name;
-        char * author;
-        int year;
-        struct MusicalComposition * next;
-        struct MusicalComposition * previous;
-    }
-MusicalComposition;
+char ** stack;
+int  last = -1;
 
-MusicalComposition * createMusicalComposition(char * name, char * author, int year) {
-    MusicalComposition * composition = (MusicalComposition * ) malloc(sizeof(MusicalComposition));
-    composition->name = name;
-    composition->author = author;
-    composition->year = year;
-    composition->next = NULL;
-    composition->previous = NULL;
-    return composition;
+void yps(){
+printf("wrong");
+exit(0);
 }
-
-MusicalComposition * createMusicalCompositionList(char * * array_names, char * * array_authors, int * array_years, int n) {
-    MusicalComposition * head = createMusicalComposition(array_names[0], array_authors[0], array_years[0]);
-    MusicalComposition * tmp = head;
-    for (int i = 1; i < n; i++) {
-        tmp->next = createMusicalComposition(array_names[i], array_authors[i], array_years[i]);
-        tmp->next->previous = tmp;
-        tmp = tmp->next;
-    }
-    return head;
-}
-
-void push(MusicalComposition * head, MusicalComposition * element) {
-    MusicalComposition * tmp = head;
-    while (tmp->next != NULL)
-    {
-        tmp = tmp->next;
-    }
-    tmp->next = element;
-    tmp->next->previous = tmp;
-}
-
-void removeEl(MusicalComposition * head, char * name_for_remove) {
-    MusicalComposition * tmp = head;
-    while (tmp->next != NULL)
-    {
-        if (strcmp(tmp->name, name_for_remove) == 0)
-        {
-            tmp->previous->next=tmp->next;
+void tag(){
+    int i,flag = 0;
+    char s[4] = "20br";
+    if (stack[last][0] == '2'){
+        for (i = 0;i<4;i++){
+            if (stack[last][i] != s[i]){
+                flag = 1;
+            }
         }
-        tmp = tmp->next;
+        if (flag == 0){
+        free(stack[last]);
+                    last--;
+        }
+    flag = 0;
     }
+
+
+    s[4] = "20hr";
+    if (stack[last][0] == '2'){
+        for (i = 0;i<4;i++){
+            if (stack[last][i] != s[i]){
+                flag = 1;
+            }
+        }
+        if (flag == 0){
+        free(stack[last]);
+                    last--;
+    }
+    }
+
 }
 
-int Count(MusicalComposition * head)
-{
-    MusicalComposition *tmp = head;
-    int counter = 0;
-    while (tmp != NULL)
-    {
-        counter++;
-        tmp = tmp->next;
+int same(){
+    int i;
+    if (stack[last][0] == stack[last-1][0] && stack[last][1] != stack[last-1][1] ){
+        int size_s = stack[last][0] - '0';
+        for ( i = 0;i<size_s;i++){
+            if (stack[last][i+2] != stack[last-1][i+2]){
+                return 1;
+            }
+        }
     }
-    return counter;
-}
-
-void print_names(MusicalComposition * head) {
-    MusicalComposition * tmp = head;
-    while (tmp != NULL) {
-        printf("%s\n", tmp->name);
-        tmp = tmp->next;
-    }
-}
-
-int main() {
-    int length;
-    scanf("%d\n", & length);
-
-    char **names = (char**)malloc(sizeof(char*)*length);
-    char **authors = (char**)malloc(sizeof(char*)*length);
-    int *years = (int*)malloc(sizeof(int)*length);
-
-    for (int i = 0; i < length; i++)
-    {
-        char name[80];
-        char author[80];
-
-        fgets(name, 80, stdin);
-        fgets(author, 80, stdin);
-        fscanf(stdin, "%d\n", & years[i]);
-
-        (*strstr(name, "\n")) = 0;
-        (*strstr(author, "\n")) = 0;
-
-        names[i] = (char*)malloc(sizeof(char*)*(strlen(name)+1));
-        authors[i] = (char*)malloc(sizeof(char*)*(strlen(author)+1));
-
-        strcpy(names[i], name);
-        strcpy(authors[i], author);
-    }
-
-    MusicalComposition *head = createMusicalCompositionList(names, authors, years, length);
-    char name_for_push[80];
-    char author_for_push[80];
-    int year_for_push;
-
-    char name_for_remove[80];
-
-    fgets(name_for_push, 80, stdin);
-    fgets(author_for_push, 80, stdin);
-    fscanf(stdin, "%d\n", & year_for_push);
-    (*strstr(name_for_push, "\n")) = 0;
-    (*strstr(author_for_push, "\n")) = 0;
-
-    MusicalComposition * element_for_push = createMusicalComposition(name_for_push, author_for_push, year_for_push);
-
-    fgets(name_for_remove, 80, stdin);
-    (*strstr(name_for_remove, "\n")) = 0;
-
-    printf("%s %s %d\n", head->name, head->author, head->year);
-    int k = Count(head);
-
-    printf("%d\n", k);
-    push(head, element_for_push);
-
-    k = Count(head);
-    printf("%d\n", k);
-
-    removeEl(head, name_for_remove);
-    print_names(head);
-
-    k = Count(head);
-    printf("%d\n", k);
-
     return 0;
+
+}
+
+void proverka(){
+
+
+        if ( last - 1 >=0){
+            if (same() == 0){
+                    free(stack[last]);
+                    last--;
+                    free(stack[last]);
+                    last--;
+            }
+            else{
+                yps();
+            }
+        }
+        else{
+            yps();
+        }
+
+
+}
+
+void vvod_tag(){
+    char c;
+    char *s;
+    int i = 0,n=1,j;
+    last++;
+     s = (char*)malloc((15 * n) * sizeof(char));
+    while ((c = getchar()) != '>'){
+        if (i == 0){
+            if (c == '/'){
+                s[i] = '1';
+            }
+            else{
+                s[i] = '0';
+                i++;
+                s[i] = c;
+            }
+        }
+        else{
+
+            s[i] = c;
+        }
+        i++;
+        if ((i % 15) == 0){                    // увеличение места для тега в строке
+                n++;
+            s = (char*)realloc(s,(15 * n) * sizeof(char));
+        }
+    }
+    stack[last] = (char*)malloc((i * sizeof(char  )) + 2);   // увеличение места для тега в стеке
+    
+    stack[last][0] = (i-1) + '0';
+    if (s[0] == '1'){
+        stack[last][1] = '1';
+    }
+    else{
+        stack[last][1] = '0';
+    }
+
+    for ( j =1 ;j<i+1;j++){
+        stack[last][j+1] = s[j];
+
+    }
+    /**/
+  /*  for (j = 0;j<i+1;j++){
+        printf("%c",stack[last][j]);
+
+    }
+     printf("\n");*/
+    free(s);
+    tag();
+    if (stack[last][1] == '1'){
+            proverka();}
+
+
+}
+
+int main()
+{
+    int kol=15,n = 1;
+    stack = (char **)malloc((kol*n)*sizeof(char *));
+    char c;
+    //freopen("input.txt","r",stdin);
+    while((c = getchar()) != EOF){
+        if (last >= (kol*n - 1)){                        // если количесвто тегов перерасло планку
+            n++;
+            stack = (char **)realloc(stack,(kol*n)*sizeof(char *));
+        }
+            
+        if (c == '<'){
+            vvod_tag();
+        }
+
+    }
+    if (last == -1){
+        printf("correct");
+    }
+    else{
+        yps();
+    }
 }
