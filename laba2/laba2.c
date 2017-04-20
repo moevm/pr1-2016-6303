@@ -55,6 +55,7 @@ int main()
 				else if(i-1 == k)
 				{
 					removeEl(stack,i);
+					free(stack[i]);
 					--i;
 				}
 				else
@@ -62,11 +63,13 @@ int main()
 					printf("wrong\n");
 					return 0;
 				}
+				free(arr);
 			}
 		}	
 
 		scanf("%c",&c);
 	}
+	free(stack);
 	if (i == 0)
 	{
 		printf("correct\n");
