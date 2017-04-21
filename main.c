@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <time.h>
 
-#define For(i,a,b) for (i=a;i<b;i++)
+
 
 const int N = 1000;
 
@@ -14,7 +14,7 @@ int compare(const void * x1, const void * x2)   // функция сравнения элементов м
 int main() {
   int *a ,end,start,i; // e,s переменные для подсчета времени
    a = (int* )malloc(N*sizeof(int));
-    For(i,0,N){ //считываем массив
+   for(i = 0;i < N;i++){ //считываем массив
         scanf("%d",&a[i]);
     } 
     /*quicksort*/
@@ -42,7 +42,7 @@ int main() {
     //bool Fd_Nm = false; 
     int Fd_Nm = 0;
     start = clock();
-    For(i,0,N){
+    for(i = 0;i < N;i++){
         if (a[i] == 0){
             /*Fd_Nm = true;*/Fd_Nm = 1;break;
         }
