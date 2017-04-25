@@ -30,13 +30,18 @@ int count(Stack* top) {
   }
   return n;
 }
+//элемент на вершине стека
+int top_element(Stack* top) {
+	return top->data;
+}
 
 //арифметическая операция над двумя крайними элементами стека, с последующим удалением этих элементов и добавлением резултата в стек
 void math(char c, Stack** top){
  int a, b;
- a=(*top)->data;
- Stack * ptr=(*top)->prev;
- b=(ptr)->data;
+ a=top_element( *top);
+ remove_element(top);
+ b=top_element( *top);
+ remove_element(top);
  int result;
  switch(c) {
  	case '+':
@@ -52,8 +57,6 @@ void math(char c, Stack** top){
  		result=a/b;
  		break;
  }
- remove_element(top);
- remove_element(top);
  push(top, result);
 }
   
