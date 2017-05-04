@@ -1,3 +1,5 @@
+// Лабораторная работа №2 Куликов М.Л. гр 6303
+
 #include <stdio.h>
 #include <stdlib.h>
 
