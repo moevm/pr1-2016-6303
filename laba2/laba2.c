@@ -6,8 +6,8 @@
 #define NAME_SIZE 30
 
 int find(char** stack);
-void push(char** stack, char* name);
-void pop(char** stack,char* name);
+void push(char** stack, char* name,int* i);
+void pop(char** stack,char* name, int* i);
 
 int main()
 {
@@ -41,13 +41,11 @@ int main()
 			{
 				if(arr[0]=='/')
 				{
-					pop(stack,arr);
-					--i;
+					pop(stack,arr,&i);
 				}
 				else 
 				{
-					push(stack,arr);
-					++i;
+					push(stack,arr,&i);
 				}
 			}
 			free(arr);
@@ -71,20 +69,25 @@ int find(char** stack)
 	return i;
 }
 
-void push(char** stack, char* name)
+void push(char** stack, char* name,int* i)
 {
 	int number = find(stack);
 	stack[number] = (char*)malloc(sizeof(char)*NAME_SIZE);
 	strcpy(stack[number],name);
+	(*i)++;
 }
 
-void pop(char** stack,char* name)
+void pop(char** stack,char* name,int* i)
 {
 	int number = find(stack)-1;
 	if(number>=0)
 	{
 	char s[31] ="/";
-	if (strcat(s,stack[number])==(strcat(stack[number],name)))
+	strcat(s,stack[number]);
+	if (!strcmp(s,name))
+	{
 		free(stack[number]);
+		(*i)--;
+	}
 	}
 }
