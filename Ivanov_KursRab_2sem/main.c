@@ -1,3 +1,6 @@
+//Иванов Дмитрий Владимирович. Группа 6303
+//Код Курсовой работы
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
