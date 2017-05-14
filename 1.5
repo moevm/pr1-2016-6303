@@ -1,0 +1,15 @@
+#include <stdio.h>
+int main()
+{
+    int i=0,len=0,min=65535, max=-65536;
+    scanf("%d", &len);
+    int *arr=(int*)malloc(len*sizeof(int));
+    for (i=0; i<len; i++)
+    {
+        scanf("%d", &arr[i]);
+    	if (arr[i]>max) max=arr[i];
+    	if (arr[i]<min) min=arr[i];
+    }
+    printf("%d",max-min);
+    return 0;
+}
