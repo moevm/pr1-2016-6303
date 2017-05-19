@@ -1,0 +1,40 @@
+#include <stdio.h>
+#include <stdlib.h>
+int main()
+{
+    int* mass;
+    int max = 0;
+    int min = 0;
+    int num = 0;
+    int i = 0;
+    scanf("%d", &num);
+    mass = (int *)malloc(num*sizeof(int));
+    for (i = 0; i < num; ++i)
+    {
+        scanf ("%d", &mass[i]);
+    }
+    
+    max = mass[0];
+    
+    for (i = 0; i < num; ++i)
+    {
+        if (mass[i] > max)
+        {
+            max = mass[i];
+        }
+    }
+    
+    min = mass[0];
+    
+    for (i = 0; i < num; ++i)
+    {
+        if (mass[i] < min)
+        {
+            min = mass[i];
+        }
+    }
+    
+    num = max - min;
+    printf("%d\n", num);
+    return 0;
+}

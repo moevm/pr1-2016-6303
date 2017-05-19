@@ -1,0 +1,31 @@
+#include <stdio.h>
+#include <stdlib.h>
+int main()
+{
+    int *mass;
+    int i = 0;
+    int n = 0;
+    int num = 0;
+    int rep = 0;
+    scanf ("%d", &n);
+    while (i != n)
+    {
+        mass = (int *)malloc((i+1)*sizeof(int));
+        scanf("%d", &mass[i]);
+        num = mass[i];
+        ++i;
+        if(num == mass[i])
+        {
+            ++rep;
+            continue;
+        }
+        else
+        {
+            continue;
+        }
+        
+    }
+    printf("%d (%d)\n", num, rep);
+    return 0;
+}
+

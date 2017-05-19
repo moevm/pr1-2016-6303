@@ -1,0 +1,13 @@
+#include <stdio.h>
+#include <math.h>
+int main()
+{
+    int num = 0;
+    int power = 0;
+    scanf("%d %d", &num, &power);
+    num = pow(num, power);
+    printf("%d\n", num);
+    
+
+    return 0;
+}

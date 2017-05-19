@@ -1,0 +1,27 @@
+#include <stdio.h>
+
+int main()
+{
+    char* string;
+    char symb;
+    int i = 0;
+    int ch = 0;
+    scanf("%s %c", string, &symb);
+    while (string[i] != '\0')
+    {
+        if (string[i] == symb)
+        {
+            ++ch;
+            ++i;
+            continue;
+        }
+        else
+        {
+            ++i;
+            continue;
+        }
+    }
+    printf ("%d\n", ch);
+
+    return 0;
+}

@@ -1,0 +1,23 @@
+#include <stdio.h>
+
+int main()
+{
+    char c;
+    int i = 0;
+    while (c != '\n')
+    {
+        c = getchar();
+        ++i;
+        if ((i % 2) == 0)
+        {
+            putchar(c);
+        }
+        else
+        {
+            continue;
+        }
+    }
+    
+
+    return 0;
+}
