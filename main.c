@@ -1,138 +1,76 @@
-#include <stdlib.h>
 #include <stdio.h>
-#include <string.h>
+#include <stdlib.h>
+#include<dir.h>
+#include <dirent.h>
 
-    typedef struct MusicalComposition {
-        char * name;
-        char * author;
-        int year;
-        struct MusicalComposition * next;
-        struct MusicalComposition * previous;
-    }
-MusicalComposition;
+int IfFile(const char* dir,const char* name){
 
-MusicalComposition * createMusicalComposition(char * name, char * author, int year) {
-    MusicalComposition * composition = (MusicalComposition * ) malloc(sizeof(MusicalComposition));
-    composition->name = name;
-    composition->author = author;
-    composition->year = year;
-    composition->next = NULL;
-    composition->previous = NULL;
-    return composition;
-}
+    char file[100]; strcpy(file,dir);strcat(file,"/");strcat(file,name);// добавление дириктории
+    int j = strlen(dir),otvet,a;
 
-MusicalComposition * createMusicalCompositionList(char * * array_names, char * * array_authors, int * array_years, int n) {
-    MusicalComposition * head = createMusicalComposition(array_names[0], array_authors[0], array_years[0]);
-    MusicalComposition * tmp = head;
-    for (int i = 1; i < n; i++) {
-        tmp->next = createMusicalComposition(array_names[i], array_authors[i], array_years[i]);
-        tmp->next->previous = tmp;
-        tmp = tmp->next;
-    }
-    return head;
-}
+    freopen(file,"r",stdin);
 
-void push(MusicalComposition * head, MusicalComposition * element) {
-    MusicalComposition * tmp = head;
-    while (tmp->next != NULL)
-    {
-        tmp = tmp->next;
-    }
-    tmp->next = element;
-    tmp->next->previous = tmp;
-}
-
-void removeEl(MusicalComposition * head, char * name_for_remove) {
-    MusicalComposition * tmp = head;
-    while (tmp->next != NULL)
-    {
-        if (strcmp(tmp->name, name_for_remove) == 0)
-        {
-            tmp->previous->next=tmp->next;
+    if (dir[j-1] == 'd' && dir[j-2] == 'd' && dir[j-3] == 'a'){
+        otvet = 0;
+        while(scanf("%d",&a)!=EOF){
+            otvet+=a;
         }
-        tmp = tmp->next;
     }
+    else{
+        otvet = 1;
+        while(scanf("%d",&a)!=EOF){
+            otvet*=a;
+        }
+    }
+    close(stdin);
+    return otvet;
 }
 
-int Count(MusicalComposition * head)
+int list_dir(const char *startdir)
 {
-    MusicalComposition *tmp = head;
-    int counter = 0;
-    while (tmp != NULL)
+  char current_path[100];
+  strcpy(current_path,startdir);
+  int j = strlen(current_path),answer = 0,Bool;
+  DIR *dir = opendir(current_path);
+  struct  dirent *de = readdir(dir);
+
+   if ((current_path[j-1] == 'd' && current_path[j-2] == 'd' && current_path[j-3] == 'a')|| (strstr(current_path,".txt") >0)){
+      Bool= 0;
+   }
+   else{
+    Bool = 1;
+    answer = 1;
+   }
+
+  if(dir)
+    while(de)
     {
-        counter++;
-        tmp = tmp->next;
+     if(0!=strcmp(".",de->d_name) && 0!=strcmp("..",de->d_name))
+     {
+
+      if (strstr(de->d_name,".txt")){
+            (Bool == 0)?(answer+=IfFile(current_path,de->d_name)):(answer*=IfFile(current_path,de->d_name));
+            }else if(strstr(de->d_name,"add")>0 ||strstr(de->d_name,"mul")>0){
+
+                                                                        int path_len = strlen(current_path);
+                                                                        strcat(current_path,"/");
+                                                                        strcat(current_path,de->d_name);
+
+                                                                        if ((strstr(current_path,".txt") ==0)){
+                                                                                                    (Bool ==0)?(answer +=list_dir(current_path)):(answer *=list_dir(current_path));
+                                                                                                        }
+                                        current_path[path_len] = '\0';
+            }
+     }
+     de = readdir(dir);
     }
-    return counter;
+
+  closedir(dir);
+  return answer;
 }
 
-void print_names(MusicalComposition * head) {
-    MusicalComposition * tmp = head;
-    while (tmp != NULL) {
-        printf("%s\n", tmp->name);
-        tmp = tmp->next;
-    }
-}
-
-int main() {
-    int length;
-    scanf("%d\n", & length);
-
-    char **names = (char**)malloc(sizeof(char*)*length);
-    char **authors = (char**)malloc(sizeof(char*)*length);
-    int *years = (int*)malloc(sizeof(int)*length);
-
-    for (int i = 0; i < length; i++)
-    {
-        char name[80];
-        char author[80];
-
-        fgets(name, 80, stdin);
-        fgets(author, 80, stdin);
-        fscanf(stdin, "%d\n", & years[i]);
-
-        (*strstr(name, "\n")) = 0;
-        (*strstr(author, "\n")) = 0;
-
-        names[i] = (char*)malloc(sizeof(char*)*(strlen(name)+1));
-        authors[i] = (char*)malloc(sizeof(char*)*(strlen(author)+1));
-
-        strcpy(names[i], name);
-        strcpy(authors[i], author);
-    }
-
-    MusicalComposition *head = createMusicalCompositionList(names, authors, years, length);
-    char name_for_push[80];
-    char author_for_push[80];
-    int year_for_push;
-
-    char name_for_remove[80];
-
-    fgets(name_for_push, 80, stdin);
-    fgets(author_for_push, 80, stdin);
-    fscanf(stdin, "%d\n", & year_for_push);
-    (*strstr(name_for_push, "\n")) = 0;
-    (*strstr(author_for_push, "\n")) = 0;
-
-    MusicalComposition * element_for_push = createMusicalComposition(name_for_push, author_for_push, year_for_push);
-
-    fgets(name_for_remove, 80, stdin);
-    (*strstr(name_for_remove, "\n")) = 0;
-
-    printf("%s %s %d\n", head->name, head->author, head->year);
-    int k = Count(head);
-
-    printf("%d\n", k);
-    push(head, element_for_push);
-
-    k = Count(head);
-    printf("%d\n", k);
-
-    removeEl(head, name_for_remove);
-    print_names(head);
-
-    k = Count(head);
-    printf("%d\n", k);
-
+int main()
+{
+    printf("%d",list_dir("add"));
     return 0;
 }
