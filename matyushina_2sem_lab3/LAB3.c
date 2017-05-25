@@ -40,22 +40,17 @@
     		count=count*atoi(part);
     		part = strtok(NULL, " ");
     	}
-
     	fclose(f);
     }
     free(s);
     return count;
   }
-
-  
   
   void remake( char *path, char * new) {
 
     strcat(path, "/");
     strcat(path, new);
   }
-
-
 
   int dirTraveler(const char *startDir, int flag) {
 
@@ -82,15 +77,9 @@
     		remake(path, de->d_name);
     		if (flag==0){
     			result=result+takeAdd(path);
-    			printf("add %d\n", result);
-    			printf("direcrory %s\n", path);
-    			
     		}
     		if (flag==1){
     			result=result*takeMul(path);
-    			printf("mull %d\n", result);
-    			printf("direcrory %s\n", path);
-
     		}
     		path[path_len]='\0';
     	  }
