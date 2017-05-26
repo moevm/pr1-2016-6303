@@ -1,138 +1,93 @@
-#include <stdlib.h>
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 
-    typedef struct MusicalComposition {
-        char * name;
-        char * author;
-        int year;
-        struct MusicalComposition * next;
-        struct MusicalComposition * previous;
-    }
-MusicalComposition;
 
-MusicalComposition * createMusicalComposition(char * name, char * author, int year) {
-    MusicalComposition * composition = (MusicalComposition * ) malloc(sizeof(MusicalComposition));
-    composition->name = name;
-    composition->author = author;
-    composition->year = year;
-    composition->next = NULL;
-    composition->previous = NULL;
-    return composition;
+
+void push(char ** stack, char * element,int* flag){   // Помещаем в СТЭК
+    (*flag)++;
+    strcpy(stack[*flag],element);
 }
-
-MusicalComposition * createMusicalCompositionList(char * * array_names, char * * array_authors, int * array_years, int n) {
-    MusicalComposition * head = createMusicalComposition(array_names[0], array_authors[0], array_years[0]);
-    MusicalComposition * tmp = head;
-    for (int i = 1; i < n; i++) {
-        tmp->next = createMusicalComposition(array_names[i], array_authors[i], array_years[i]);
-        tmp->next->previous = tmp;
-        tmp = tmp->next;
-    }
-    return head;
+char *top(char ** stack,int* flag){
+    return stack[*flag];
 }
-
-void push(MusicalComposition * head, MusicalComposition * element) {
-    MusicalComposition * tmp = head;
-    while (tmp->next != NULL)
-    {
-        tmp = tmp->next;
-    }
-    tmp->next = element;
-    tmp->next->previous = tmp;
+void pop(char ** stack,int* flag){ // Удаляем последний элемент СТЭКа
+    (*flag)--;
 }
-
-void removeEl(MusicalComposition * head, char * name_for_remove) {
-    MusicalComposition * tmp = head;
-    while (tmp->next != NULL)
-    {
-        if (strcmp(tmp->name, name_for_remove) == 0)
-        {
-            tmp->previous->next=tmp->next;
-        }
-        tmp = tmp->next;
+int size_s(char ** stack,int* flag){ // Возвращает размер СТЭКа
+    return *flag;
+}
+int empty_s(char ** stack,int* flag){ //     Возвращает 0 ,если стэк пуст
+    if ((*flag) == -1){//Возвращает 1 ,если стэк не пуст
+        return 0;
+    }
+    else{
+        return 1;
     }
 }
-
-int Count(MusicalComposition * head)
+void FM(char** tag){
+    int q;
+     for (q = 0; q<100; q++){
+                           free(tag[q]);}
+                                            free(tag);
+}
+int main()
 {
-    MusicalComposition *tmp = head;
-    int counter = 0;
-    while (tmp != NULL)
-    {
-        counter++;
-        tmp = tmp->next;
+    int flag = -1;
+
+    /*ввод из файл*/
+    //freopen("input.txt","r",stdin);
+
+    char c,cup[80];
+    int i,k;
+    /*Выделение памяти под стэк*/
+    char **tag;
+    tag = (char**)malloc(100 * sizeof(char*));
+        for (i = 0; i<100; i++){
+                tag[i] = (char*)malloc(80 * sizeof(char));
+        }
+     /**/
+    char *string = (char*)malloc(3000 * sizeof(char));
+    gets(string);
+   for( i= 0;i<strlen(string);i++){
+    c = string[i];
+        if (c == '<') {
+                        k=0;
+
+                        while((cup[k] = string[i+k+1]) != '>')k++;
+                        cup[k] = '\0';
+
+                        if (strcmp(cup,"hr")  && strcmp(cup,"br") ){
+
+                                if (cup[0] != '/'){ // Если тэг - открывающийся : заносим в стэк
+                                                    push(tag,cup,&flag);
+                                                    }
+            else{
+                    if (empty_s(tag,&flag) == 0){    // Если стэк пуст, то есть ЗАКРВАЮЩИЙСЯ  тэг не был открыт, то выход
+                                printf("wrong");
+                                return 0;
+                                    }
+                                else{
+                                        if (strcmp(top(tag,&flag),cup+1) != 0){  // Если закрывающийся, не равен перед ним стоящему открывающемуся
+                                                    free(string);
+                                                    FM(tag);
+                                                    printf("wrong");
+                                                    return 0;
+                                                                        }
+                                                                        else{   // Если тэги совпадают
+                                                                            pop(tag,&flag);
+                                                                            }
+                                        }
+                }
+                                                                    }
+                    }
+                                        }
+    if (empty_s(tag,&flag) == 0){ // Если стэк пуст, то страницы ВАЛИДНА
+        printf("correct");
     }
-    return counter;
-}
-
-void print_names(MusicalComposition * head) {
-    MusicalComposition * tmp = head;
-    while (tmp != NULL) {
-        printf("%s\n", tmp->name);
-        tmp = tmp->next;
+    else{
+       printf("wrong");
     }
-}
-
-int main() {
-    int length;
-    scanf("%d\n", & length);
-
-    char **names = (char**)malloc(sizeof(char*)*length);
-    char **authors = (char**)malloc(sizeof(char*)*length);
-    int *years = (int*)malloc(sizeof(int)*length);
-
-    for (int i = 0; i < length; i++)
-    {
-        char name[80];
-        char author[80];
-
-        fgets(name, 80, stdin);
-        fgets(author, 80, stdin);
-        fscanf(stdin, "%d\n", & years[i]);
-
-        (*strstr(name, "\n")) = 0;
-        (*strstr(author, "\n")) = 0;
-
-        names[i] = (char*)malloc(sizeof(char*)*(strlen(name)+1));
-        authors[i] = (char*)malloc(sizeof(char*)*(strlen(author)+1));
-
-        strcpy(names[i], name);
-        strcpy(authors[i], author);
-    }
-
-    MusicalComposition *head = createMusicalCompositionList(names, authors, years, length);
-    char name_for_push[80];
-    char author_for_push[80];
-    int year_for_push;
-
-    char name_for_remove[80];
-
-    fgets(name_for_push, 80, stdin);
-    fgets(author_for_push, 80, stdin);
-    fscanf(stdin, "%d\n", & year_for_push);
-    (*strstr(name_for_push, "\n")) = 0;
-    (*strstr(author_for_push, "\n")) = 0;
-
-    MusicalComposition * element_for_push = createMusicalComposition(name_for_push, author_for_push, year_for_push);
-
-    fgets(name_for_remove, 80, stdin);
-    (*strstr(name_for_remove, "\n")) = 0;
-
-    printf("%s %s %d\n", head->name, head->author, head->year);
-    int k = Count(head);
-
-    printf("%d\n", k);
-    push(head, element_for_push);
-
-    k = Count(head);
-    printf("%d\n", k);
-
-    removeEl(head, name_for_remove);
-    print_names(head);
-
-    k = Count(head);
-    printf("%d\n", k);
-
-    return 0;
+    FM(tag);
+    free(string);
 }
