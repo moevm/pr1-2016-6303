@@ -19,11 +19,19 @@ void push(struct Node**top,char*sign)
     tmp->next=*top;
     *top=tmp;
 }
-
+void freedata(struct Node **head)
+{
+    while(*head)
+    {
+        free((*head)->data);
+        *head=(*head)->next;
+    }
+}
 void pop(struct Node **head)
 {
     struct Node*tmp = *head;
     *head=(*head)->next;
+    free(tmp->data);
     free(tmp);
 }
 
@@ -62,6 +70,7 @@ int main()
             if(isempty(top)== 1)
             {
                 printf("wrong");
+                freedata(&top);
                 free(top);
                 return 0;
             }
@@ -78,11 +87,15 @@ int main()
                 if(strcmp(wordout,topdata(top))!=0)
                 {
                     printf("wrong");
+                    free(wordout);
+                    free(arr);
+                    freedata(&top);
                     free(top);
                     return 0;
                 }
                 else
                     pop(&top);
+                free(wordout);
             }
         }
 
@@ -91,6 +104,8 @@ int main()
         printf("correct");
     else
         printf("wrong");
+    freedata(&top);
+    free(arr);
     free(top);
     return 0;
 }
