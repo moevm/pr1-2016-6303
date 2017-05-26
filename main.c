@@ -3,6 +3,7 @@
 #include <string.h>
 
 
+
 void push(char ** stack, char * element,int* flag){   // Помещаем в СТЭК
     (*flag)++;
     strcpy(stack[*flag],element);
@@ -24,11 +25,21 @@ int empty_s(char ** stack,int* flag){ //     Возвращает 0 ,если стэк пуст
         return 1;
     }
 }
+void FM(char** tag){
+    int q;
+     for (q = 0; q<100; q++){
+                           free(tag[q]);}
+                                            free(tag);
+}
 int main()
 {
+    int flag = -1;
+
+    /*ввод из файл*/
+    //freopen("input.txt","r",stdin);
 
     char c,cup[80];
-    int i;
+    int i,k;
     /*Выделение памяти под стэк*/
     char **tag;
     tag = (char**)malloc(100 * sizeof(char*));
@@ -36,11 +47,15 @@ int main()
                 tag[i] = (char*)malloc(80 * sizeof(char));
         }
      /**/
-
-    while ((c = getchar()) != EOF ){
-
+    char *string = (char*)malloc(3000 * sizeof(char));
+    gets(string);
+   for( i= 0;i<strlen(string);i++){
+    c = string[i];
         if (c == '<') {
-                        scanf("%79[^>]>",cup); //Считываем ИМЯ тэга
+                        k=0;
+
+                        while((cup[k] = string[i+k+1]) != '>')k++;
+                        cup[k] = '\0';
 
                         if (strcmp(cup,"hr")  && strcmp(cup,"br") ){
 
@@ -54,6 +69,8 @@ int main()
                                     }
                                 else{
                                         if (strcmp(top(tag,&flag),cup+1) != 0){  // Если закрывающийся, не равен перед ним стоящему открывающемуся
+                                                    free(string);
+                                                    FM(tag);
                                                     printf("wrong");
                                                     return 0;
                                                                         }
@@ -71,5 +88,6 @@ int main()
     else{
        printf("wrong");
     }
-    free(tag);
+    FM(tag);
+    free(string);
 }
