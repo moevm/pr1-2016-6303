@@ -39,29 +39,30 @@ void readFiles(char *currPath, char** strings, int *index)
     strcat(currPath, "/"); 
     DIR * dir = opendir(currPath); 
     struct dirent *obj = readdir(dir); 
-    char pathToFile[PATHSIZE]; 
+    int pathLen;
     if(dir) 
     { 
         while(obj) 
         { 
             if(obj->d_type == DT_DIR && strcmp(obj->d_name, ".") && strcmp(obj->d_name, "..")) 
             { 
-                int pathLen = strlen(currPath); 
+                pathLen = strlen(currPath); 
                 strcat(currPath, obj->d_name); 
                 readFiles(currPath, strings, index); 
                 currPath[pathLen] = '\0'; 
             } 
             if(obj->d_type == DT_REG && strstr(obj->d_name, ".txt")) 
-            { 
-                strcpy(pathToFile, currPath); 
-                strcat(pathToFile, obj->d_name); 
-                FILE *txt = fopen(pathToFile, "r"); 
+            {  
+                pathLen = strlen(currPath); 
+                strcat(currPath, obj->d_name); 
+                FILE *txt = fopen(currPath, "r"); 
                 if(txt) 
                 { 
                     fgets(strings[*index], STRINGSIZE, txt); 
                     (*index)++; 
                     fclose(txt); 
                 } 
+               currPath[pathLen] = '\0'; 
             } 
             obj = readdir(dir); 
         } 
