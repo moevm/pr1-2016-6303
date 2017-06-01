@@ -4,47 +4,36 @@
     #include <dirent.h>
     #include <stdlib.h>
 
- int takeAdd(const char *path) {
+int takeAdd(const char *path) {
 
-    char* s=malloc(100*sizeof(char));
-    FILE *f = fopen(path, "r");
-    int count;
-    char* part;
-    count=0;
-    if(f) {
-    	fgets(s,sizeof(s)/sizeof(char),f) ;
-    	part=strtok(s, " ");
-    	while (part!=NULL){
-    		count=count+atoi(part);
-    		part = strtok(NULL, " ");
-    	}
-
-    	fclose(f);
-    }
-    free(s);
-    return count;
+  int count, n;
+  count=0;
+  FILE *f = fopen(path, "r");
+  int i=0;
+  if(f) {
+	while( fscanf(f,"%d" ,&n)!=EOF) {
+		count=count+n;
+  	}
+  fclose(f);
   }
+  return count;
+}
 
-  int takeMul(const char *path) {
+int takeMul(const char *path) {
 
-    char* s=malloc(100*sizeof(char));
-    FILE *f = fopen(path, "r");
-    int count;
-    char* part;
-    count=1;
-    
-    if(f) {
-    	fgets(s,sizeof(s)/sizeof(char),f);
-   	part=strtok(s, " ");
-    	while (part!=NULL){
-    		count=count*atoi(part);
-    		part = strtok(NULL, " ");
-    	}
-    	fclose(f);
-    }
-    free(s);
-    return count;
+  int count, n;
+  count=1;
+  FILE *f = fopen(path, "r");
+  int i=0;
+  if(f) {
+	while( fscanf(f,"%d" ,&n)!=EOF) {
+		count=count*n;
+	}
+  	fclose(f);
   }
+  return count;
+
+}
   
   void remake( char *path, char * new) {
 
