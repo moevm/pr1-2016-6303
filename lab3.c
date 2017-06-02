@@ -7,34 +7,31 @@
 #define STRINGSIZE 200
 #define STRINGCOUNT 100 
 
-void readFiles(char *currPath, char** strings, int *index); 
+
+struct file
+{
+    int number;
+    char string[STRINGSIZE];
+};
+
+void readFiles(char *currPath, struct file * files, int *index);
+int compare(const void * number1, const void * number2);
 
 int main() 
 { 
     char path[PATHSIZE] = "."; 
     int index = 0; 
     int i, j;
-    char ** strings = (char**)malloc(STRINGCOUNT * sizeof(char*)); 
-    for(i = 0; i < STRINGCOUNT; i++) 
-        strings[i] = (char*)malloc(sizeof(char)*STRINGSIZE); 
-    readFiles(path, strings, &index); 
-    for(i = 0; i < index; i++) 
-        for(j = 0; j < index -i - 1; j++) 
-            if(atoi(strings[j]) > atoi(strings[j+1])) 
-            { 
-                char* temp = strings[j]; 
-                strings[j] = strings[j + 1]; 
-                strings[j + 1] = temp; 
-            } 
+    struct file* files = (struct file*)malloc(STRINGCOUNT*sizeof(struct file));
+    readFiles(path, files, &index); 
+    qsort(files, index, sizeof(struct file), compare);
     for( i = 0; i < index; i++) 
-        printf("%s\n", strings[i]);
-    for(i = 0; i < STRINGCOUNT; i++)
-        free(strings[i]);
-    free(strings);
+        printf("%s\n", files[i].string);
+    free(files);
     return 0; 
 } 
 
-void readFiles(char *currPath, char** strings, int *index) 
+void readFiles(char *currPath, struct file * files, int *index) 
 { 
     strcat(currPath, "/"); 
     DIR * dir = opendir(currPath); 
@@ -48,7 +45,7 @@ void readFiles(char *currPath, char** strings, int *index)
             { 
                 pathLen = strlen(currPath); 
                 strcat(currPath, obj->d_name); 
-                readFiles(currPath, strings, index); 
+                readFiles(currPath, files, index); 
                 currPath[pathLen] = '\0'; 
             } 
             if(obj->d_type == DT_REG && strstr(obj->d_name, ".txt")) 
@@ -58,9 +55,11 @@ void readFiles(char *currPath, char** strings, int *index)
                 FILE *txt = fopen(currPath, "r"); 
                 if(txt) 
                 { 
-                    fgets(strings[*index], STRINGSIZE, txt); 
-                    (*index)++; 
-                    fclose(txt); 
+                    
+                    fscanf(txt,"%d" ,&files[*index].number);
+                    rewind(txt);
+                    fgets(files[*index].string, STRINGSIZE, txt);
+                    (*index)++;
                 } 
                currPath[pathLen] = '\0'; 
             } 
@@ -68,4 +67,9 @@ void readFiles(char *currPath, char** strings, int *index)
         } 
     } 
     closedir(dir); 
+}
+
+int compare(const void * number1, const void * number2)
+{
+    return (*(int*)number1 - *(int*)number2);
 }
