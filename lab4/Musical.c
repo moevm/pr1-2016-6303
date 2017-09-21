@@ -11,19 +11,21 @@ struct MusicalComposition* next;
 struct MusicalComposition* prev;
 } MusicalComposition;
 
+MusicalComposition* head;
+
 MusicalComposition* createMusicalComposition(char* name, char* author, int year);
 
 MusicalComposition* createMusicalCompositionList(char** array_names, char** array_authors, int* array_years, int n);
 
-void push(MusicalComposition* head, MusicalComposition* element);
+void push(MusicalComposition* element);
 
-void removeEl(MusicalComposition* head, char* name_for_remove);
+void removeEl(char* name_for_remove);
 
-int count(MusicalComposition* head);
+int count();
 
-void print_names(MusicalComposition* head);
+void print_names();
 
-
+int elementInList(char* element);
 int main(){
 int length;
 scanf("%d\n", &length);
@@ -52,11 +54,11 @@ strcpy(authors[i], author);
 
 }
 MusicalComposition* head = createMusicalCompositionList(names, authors, years, length);
-char name_for_push[80];
-char author_for_push[80];
+char *name_for_push =(char*)malloc(sizeof(char)*80);
+char *author_for_push = (char*)malloc(sizeof(char)*80);
 int year_for_push;
 
-char name_for_remove[80];
+char *name_for_remove = (char*)malloc(sizeof(char)*80);
 
 fgets(name_for_push, 80, stdin);
 fgets(author_for_push, 80, stdin);
@@ -69,8 +71,8 @@ MusicalComposition* element_for_push = createMusicalComposition(name_for_push, a
 fgets(name_for_remove, 80, stdin);
 (*strstr(name_for_remove,"\n"))=0;
 
-printf("%s %s %d\n", head->name, head->author, head->year);
 int k = count(head);
+printf("%s %s %d\n", head->name, head->author, head->year);
 
 printf("%d\n", k);
 push(head, element_for_push);
@@ -84,6 +86,9 @@ print_names(head);
 k = count(head);
 printf("%d\n", k);
 
+free(names);
+free(authors);
+free(years);
 return 0;
 
 }
@@ -100,30 +105,68 @@ MusicalComposition* createMusicalComposition(char* name, char* author, int year)
                                                          
 MusicalComposition* createMusicalCompositionList(char** array_names, char** array_authors, int* array_years, int n)
 {
-	MusicalComposition *head = createMusicalComposition(array_names[0],array_authors[0],array_years[0]);
-	MusicalComposition *ThisList = head;
-	for (int i=1;i<n;++i)
-	{
+  head = createMusicalComposition(array_names[0],array_authors[0],array_years[0]);
+  MusicalComposition *ThisList = head;
+  for (int i=1;i<n;++i)
+  {
 MusicalComposition *newList = createMusicalComposition(array_names[i],array_authors[i],array_years[i]);
         ThisList->next=newList;
         newList->prev=ThisList;
         ThisList=ThisList->next;
-	}
-	return head;
+  }
+  return head;
 }
 
-void push(MusicalComposition* head, MusicalComposition* element)
+void push(MusicalComposition* element)
 {
-	MusicalComposition* test = head;
-	MusicalComposition* new = createMusicalComposition(element->name, element->author, element->year);
-	while(test->next!=NULL)
-		test=test->next;
-	test->next=new;
-	new->prev=test;
+  MusicalComposition* test = head;
+  MusicalComposition* teck = createMusicalComposition(element->name, element->author, element->year);
+  if (head == NULL)
+  {
+    head=element;
+  }
+  else
+  {
+  while(test->next!=NULL)
+    test=test->next;
+  test->next=teck;
+  teck->prev=test;
+  }
 }
 
-void removeEl(MusicalComposition* head, char* name_for_remove)
+void removeEl( char* name_for_remove)
 {
+<<<<<<< HEAD:Grechkov_lr4/Musical.c
+MusicalComposition *ptr;
+ptr=head;
+MusicalComposition* next;
+MusicalComposition* prev;
+while (elementInList(name_for_remove)==1) {
+ptr=head;
+while (*ptr->name!=*name_for_remove) {
+ptr=ptr->next;
+}
+if (ptr==head) {
+head=head->next;
+}
+else if(ptr->next==NULL) {
+prev=ptr->prev;
+prev->next=NULL;
+free(ptr);
+}
+else{
+next=ptr->next;
+prev=ptr->prev;
+next->prev=prev;
+prev->next=next;
+free(ptr);
+}
+}
+
+}
+
+int count()
+=======
 	MusicalComposition* test=head;
     while(tast->name!=name_for_remove && test->next!=NULL)
     	test=test->next;
@@ -147,19 +190,54 @@ void removeEl(MusicalComposition* head, char* name_for_remove)
 }	 
 
 int count(MusicalComposition* head)
+>>>>>>> 0fae85c741cbb61c7558253c79795e9d28f702e5:Musical.c
 {
-	MusicalComposition* test =head;
-	int count=0;
-	while(test!=NULL)
-		{
-			++count;
-			test=test->next;
-		}
-	return count;
+  MusicalComposition* test =head;
+  int count=0;
+  while(test!=NULL)
+    {
+      ++count;
+      test=test->next;
+    }
+  return count;
 }
 
-void print_names(MusicalComposition* head)
+void print_names()
 {   
+<<<<<<< HEAD:Grechkov_lr4/Musical.c
+  MusicalComposition* test =head;
+  while(test)
+  {
+    printf("%s\n",test->name);
+    test=test->next;
+  }
+}
+    int elementInList(char* element)
+   {
+    MusicalComposition *ptr;
+    ptr=head;
+    int flag=0;
+    while (ptr!=NULL && flag==0) 
+    {
+    if (strcmp(ptr->name, element)==0)    
+     {
+    flag=1;
+     }
+    else
+     {
+    ptr=ptr->next;
+     }
+    }
+    if (flag==1) 
+     {
+    return 1;
+     }
+    else
+     {
+    return 0;
+     }
+    }
+=======
 	MusicalComposition* test =head;
 	while(test!=NULL)
 	{
@@ -167,3 +245,4 @@ void print_names(MusicalComposition* head)
 		test=test->next;
 	}
 }
+>>>>>>> 0fae85c741cbb61c7558253c79795e9d28f702e5:Musical.c
